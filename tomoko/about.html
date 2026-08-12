@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>about tomoko</title>
+    <link rel="stylesheet" href="about.css">
+</head>
+<body>
+    <div>
+        <p>tomoko is a neural network made using <a href="https://pytorch.org">pytorch</a> and <a href="https://github.com/niklasf/python-chess">python-chess</a>. she uses an alpha-zero style residual network with a policy head and a value head. the current config is 13 residual blocks and 128 filters</p>
+
+        <p>the board is represented as a 119 plane tensor, 8 historical frames of 14 planes each for piece positions and repetition counts, plus 7 auxiliary planes for side to move, move count, castling rights, and the fifty move counter. every position is oriented from the mover's point of view, so black and white share one set of weights.</p>
+
+        <p>moves are encoded into a 73 plane policy space covering queen like slides, knight jumps, and underpromotions, loosely following the scheme from the original <a href="https://arxiv.org/abs/1712.01815">alphazero paper</a> by <a href="https://www.deepmind.com">deepmind</a>.</p>
+
+        <p>training data is pulled from pgn files. games are kept only if they have a known result (1-0, 0-1, or draw) and a time control of at least 3 minutes base time, so bullet and hyperbullet games are filtered out by default. each kept game is stored compactly as a move list and a start fen, rather than as pre encoded tensors.</p>
+
+        <p>at load time, games are streamed and replayed move by move, with a rolling window of the last 8 board states (this keeps memory low and mirrors how the search builds history). a shuffle buffer of 20,000 positions mixes samples from many games together, so batches aren't dominated by one game's move order. the train val split is done at the game level, not the position level, with a fixed split seed, so the same 2 percent of games are always held out for validation.</p>
+
+        <p>the network is trained with <a href="https://pytorch.org/docs/stable/generated/torch.optim.SGD.html">sgd</a> and nesterov momentum, starting at a learning rate of 0.02 with a step decay schedule. gradients are clipped, and mixed precision is used. checkpoints are saved every epoch, alongside a running best checkpoint picked by validation loss.</p>
+
+        <p>search is done with a puct variant of <a href="https://en.wikipedia.org/wiki/Monte_Carlo_tree_search">monte carlo tree search</a>, using virtual loss so multiple leaves can be collected and evaluated together in a single batched forward pass (rather than one position at a time). dirichlet noise can be mixed into the root priors to encourage exploration during self play.</p>
+    </div>
+</body>
+<script>
+    if (window.self !== window.top) document.body.classList.add("in-iframe");
+</script>
+</html>
+

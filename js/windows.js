@@ -76,6 +76,11 @@ export class ProjectsWindow extends Window {
                 <i class="fa-solid fa-clock"></i>
                 <span data-app="app" class="app-label" data-i18n="apps.clock">${locale.apps.clock}.${locale.misc.app}</span>
             </div>
+            
+            <div class="app-icon" id="tomoko">
+            <i class="fa-solid fa-chess-knight"></i>
+                <span data-app="app" class="app-label">tomoko.py</span>
+            </div>
 
 
             `)
@@ -104,6 +109,10 @@ export class ProjectsWindow extends Window {
         el.querySelector("#clock").addEventListener("click", (e) => {
             e.stopPropagation();
             new ClockWindow(locale);
+        });
+        el.querySelector("#tomoko").addEventListener("click", (e) => {
+            e.stopPropagation();
+            new TomokoWindow(locale);
         });
     }
 }
@@ -234,6 +243,15 @@ export class ClockWindow extends Window {
     }
 }
 
+export class TomokoWindow extends Window {
+    constructor(locale) {
+        super("tomoko", `tomoko :3`, `
+            
+            <iframe src="tomoko" style="width: 100%; height: 100%; zoom: 0.7; border: none;" id="tomoko-iframe"></iframe>
+
+            `)
+    }
+}
 export class SettingsWindow extends Window {
     constructor(locale) {
         let checked = localStorage.getItem("mainDarkMode") == "true" ? "checked" : ""

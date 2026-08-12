@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    color: white;
+    background: #1c1c1c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.in-iframe div {
+    margin-top: 62vh;
+}
+
+div {
+    width: 50vw;
+}
+
+a {
+    color: #aa7bff;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
