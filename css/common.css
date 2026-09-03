@@ -198,6 +198,11 @@ a:hover {
     align-items: center;
     align-content: flex-start;
 
+    .folder-items {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
     gap: 1rem 2rem;
     .app-icon {
         margin: 1rem;
