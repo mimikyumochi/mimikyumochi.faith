@@ -10,22 +10,35 @@ body {
     color: white;
     background: #1c1c1c;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
-body.in-iframe div {
-    margin-top: 62vh;
-}
-
 div {
-    width: 50vw;
+    width: 70vw;
 }
 
+body:not(.in-iframe) {
+    align-items: center;
+
+    div {
+        width: 50vw;
+    }
+}
 a {
-    color: #aa7bff;
+    color: #a8e6cf;
     text-decoration: none;
 }
 a:hover {
     text-decoration: underline;
+}
+
+@media only screen and (max-width: 999px) {
+    body {
+        font-size: 1rem;
+        margin: 0;
+    }
+    div {
+        transform: scale(0.9);
+        width: 100vw !important;
+    }
 }

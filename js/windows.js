@@ -45,41 +45,42 @@ export class SpecsWindow extends Window {
 export class ProjectsWindow extends Window {
     constructor(locale) {
         super("folder projects", `${locale.apps.projects}`, `
-            
-            <div class="app-icon" id="connect4">
-                <i class="fa-solid fa-circle" id="red" style="color: rgb(255, 93, 93);"></i>
-                <i class="fa-solid fa-circle" id="yellow" style="color: rgb(255, 255, 158);"></i>
-                <span data-app="app" class="app-label" data-i18n="apps.connect4">${locale.apps.connect4}.${locale.misc.app}</span>
-            </div>
-
-            <div class="app-icon" id="maze-game">
-                <i class="fa-solid fa-signs-post"></i>
-                <span data-app="app" class="app-label" data-i18n="apps.maze">${locale.apps.maze}.${locale.misc.app}</span>
-            </div>
-
-            <div class="app-icon" id="faithbot">
-                <i class="fa-solid fa-robot"></i>
-                <span data-app="py" class="app-label" data-i18n="apps.faithbot">${locale.apps.faithbot}.${locale.misc.py}</span>
-            </div>
-
-            <div class="app-icon" id="mazegen">
-                <i class="fa-solid fa-compass"></i>
-                <span data-app="py" class="app-label" data-i18n="apps.mazegen">${locale.apps.mazegen}.${locale.misc.py}</span>
-            </div>
-
-            <div class="app-icon" id="website">
-                <i class="fa-solid fa-code"></i>
-                <span data-app="web" class="app-label" data-i18n="apps.website">${locale.apps.website}.${locale.misc.web}</span>
-            </div>
-
-            <div class="app-icon" id="clock">
-                <i class="fa-solid fa-clock"></i>
-                <span data-app="app" class="app-label" data-i18n="apps.clock">${locale.apps.clock}.${locale.misc.app}</span>
-            </div>
-            
-            <div class="app-icon" id="tomoko">
-            <i class="fa-solid fa-chess-knight"></i>
-                <span data-app="app" class="app-label">tomoko.py</span>
+            <div class="folder-items">
+                <div class="app-icon" id="connect4">
+                    <i class="fa-solid fa-circle" id="red" style="color: rgb(255, 93, 93);"></i>
+                    <i class="fa-solid fa-circle" id="yellow" style="color: rgb(255, 255, 158);"></i>
+                    <span data-app="app" class="app-label" data-i18n="apps.connect4">${locale.apps.connect4}.${locale.misc.app}</span>
+                </div>
+    
+                <div class="app-icon" id="maze-game">
+                    <i class="fa-solid fa-signs-post"></i>
+                    <span data-app="app" class="app-label" data-i18n="apps.maze">${locale.apps.maze}.${locale.misc.app}</span>
+                </div>
+    
+                <div class="app-icon" id="faithbot">
+                    <i class="fa-solid fa-robot"></i>
+                    <span data-app="py" class="app-label" data-i18n="apps.faithbot">${locale.apps.faithbot}.${locale.misc.py}</span>
+                </div>
+    
+                <div class="app-icon" id="mazegen">
+                    <i class="fa-solid fa-compass"></i>
+                    <span data-app="py" class="app-label" data-i18n="apps.mazegen">${locale.apps.mazegen}.${locale.misc.py}</span>
+                </div>
+    
+                <div class="app-icon" id="website">
+                    <i class="fa-solid fa-code"></i>
+                    <span data-app="web" class="app-label" data-i18n="apps.website">${locale.apps.website}.${locale.misc.web}</span>
+                </div>
+    
+                <div class="app-icon" id="clock">
+                    <i class="fa-solid fa-clock"></i>
+                    <span data-app="app" class="app-label" data-i18n="apps.clock">${locale.apps.clock}.${locale.misc.app}</span>
+                </div>
+                
+                <div class="app-icon" id="tomoko">
+                <i class="fa-solid fa-chess-knight"></i>
+                    <span data-app="app" class="app-label">tomoko.py</span>
+                </div>
             </div>
 
 
@@ -121,35 +122,36 @@ export class SocialsWindow extends Window {
         let isDark = localStorage.getItem("mainDarkMode") == "true" ? "" : "-dark"
 
         super("folder socials", `${locale.apps.socials}`, `
-
-            <div class="app-icon" id="github">
-                <img class="icon-img" src="assets/github${isDark}.svg"></img>
-                <span class="app-label">github.web</span>
-            </div>
-
-            <div class="app-icon" id="youtube">
-                <img class="icon-img" src="assets/youtube.svg"></img>
-                <span class="app-label">youtube.web</span>
-            </div>
-
-            <div class="app-icon" id="instagram">
-                <img class="icon-img" src="assets/instagram.svg"></img>
-                <span class="app-label">instagram.web</span>
-
-            </div>
-
-            <div class="app-icon" id="pronouns-page"">
-                <img class="icon-img" src="assets/pronouns.page.svg"></img>
-                <span class="app-label">pronouns.page.web</span>
-            </div>
-
-            <div class="app-icon" id="twitter">
-                <img class="icon-img" src="assets/twitter.svg"></img>
-                <span class="app-label">twitter.web</span>
-            </div>
-            <div class="app-icon" id="modrinth">
-                <img class="icon-img" src="assets/modrinth.svg"></img>
-                <span class="app-label">modrinth.web</span>
+            <div class="folder-items">
+                <div class="app-icon" id="github">
+                    <img class="icon-img" src="assets/github${isDark}.svg"></img>
+                    <span class="app-label">github.web</span>
+                </div>
+    
+                <div class="app-icon" id="youtube">
+                    <img class="icon-img" src="assets/youtube.svg"></img>
+                    <span class="app-label">youtube.web</span>
+                </div>
+    
+                <div class="app-icon" id="instagram">
+                    <img class="icon-img" src="assets/instagram.svg"></img>
+                    <span class="app-label">instagram.web</span>
+    
+                </div>
+    
+                <div class="app-icon" id="pronouns-page"">
+                    <img class="icon-img" src="assets/pronouns.page.svg"></img>
+                    <span class="app-label">pronouns.page.web</span>
+                </div>
+    
+                <div class="app-icon" id="twitter">
+                    <img class="icon-img" src="assets/twitter.svg"></img>
+                    <span class="app-label">twitter.web</span>
+                </div>
+                <div class="app-icon" id="modrinth">
+                    <img class="icon-img" src="assets/modrinth.svg"></img>
+                    <span class="app-label">modrinth.web</span>
+                </div>
             </div>
             `)
 
@@ -165,15 +167,16 @@ export class SocialsWindow extends Window {
 export class ModsWindow extends Window {
     constructor(locale) {
         super("folder mods", `${locale.apps.mods}`, `
-
-            <div class="app-icon" id="chiyoko">
-                <img class="icon-img" src="assets/modrinth.svg"></img>
-                <span class="app-label">chiyoko.jar</span>
-            </div>
-
-            <div class="app-icon" id="opentolanfix">
-                <img class="icon-img" src="assets/modrinth.svg"></img>
-                <span class="app-label">open-to-lan-fix.jar</span>
+            <div class="folder-items">
+                <div class="app-icon" id="chiyoko">
+                    <img class="icon-img" src="assets/modrinth.svg"></img>
+                    <span class="app-label">chiyoko.jar</span>
+                </div>
+    
+                <div class="app-icon" id="opentolanfix">
+                    <img class="icon-img" src="assets/modrinth.svg"></img>
+                    <span class="app-label">open-to-lan-fix.jar</span>
+                </div>
             </div>
             `)
 
@@ -245,10 +248,11 @@ export class ClockWindow extends Window {
 
 export class TomokoWindow extends Window {
     constructor(locale) {
+        let windowZoom = 0.8
         super("tomoko", `tomoko :3`, `
-            
-            <iframe src="tomoko" style="width: 100%; height: 100%; zoom: 0.7; border: none;" id="tomoko-iframe"></iframe>
-
+            <div style="width: 100%; height: 100%; overflow: hidden;">
+                <iframe src="tomoko" style="width: calc(100% / ${windowZoom}); height: calc(100% / ${windowZoom}); transform: scale(${windowZoom}); transform-origin: 0 0; border: none;" id="tomoko-iframe"></iframe>
+            </div>
             `)
     }
 }

@@ -2,38 +2,26 @@
 <html lang="en">
 
 <head>
-    <title>tomoko viewer :3</title>
-    <link rel="stylesheet" href="viewer.css">
+    <title>about tomoko</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-
 <body>
-    <div class="buttons">
-        <a href="https://lichess.org/@/TomokoNN" target="_blank" class="light button">play vs</a>
-        <a href="about.html" class="dark button">about</a>
-    </div>
-    <div class="game-container">
-        <div class="player-container" id="top">
-            <div class="player-info">
-                <p class="player-title"></p>
-                <p class="player-name"></p>
-                <p class="player-score"></p>
-            </div>
-            <p class="player-clock"></p>
-        </div>
-        <div class="board">
 
-        </div>
-        <div class="player-container" id="bottom">
-            <div class="player-info">
-                <p class="player-title"></p>
-                <p class="player-name"></p>
-                <p class="player-score"></p>
-            </div>
-            <p class="player-clock"></p>
-        </div>
-    </div>
+<div>
+    <p>tomoko is an ongoing project to develop an anime girl companion that's ridiculously talented at games. currently i'm focusing on training specialised models for each game, rather than creating one huge model that's capable of playing all of them at once.</p>
+    <p>the name is an acronym for <span class="acronym-letter">t</span>actically <span class="acronym-letter">o</span>verthinking <span class="acronym-letter">m</span>ulti-paradigm <span class="acronym-letter">o</span>mni-game <span class="acronym-letter">k</span>nowledge <span class="acronym-letter">o</span>ptimiser.</p>
+    <p>each game lives in its own subproject with its own board representation, its own network, and its own search or planning approach, since the right architecture for chess isn't the right architecture for tetris, and the right architecture for tetris isn't the right architecture for snake. tomoko is less one big brain than a small team of specialists sharing a face and a name.</p>
+    <p>chess is the most developed piece so far: an alphazero style residual network with a policy and value head, trained on filtered pgn data, searched with a puct variant of mcts using virtual loss for batched evaluation. <a href="chess/about.html">more detail here</a>.</p>
+    <p>tetris is playable. it's a different kind of problem to chess, less about reading an opponent's position and more about managing a queue of falling pieces under a fixed rule set, so it gets its own engine shaped around that.</p>
+    <p>snake, and battlesnake specifically, is the current work in progress. it's a different flavour of problem again: multiplayer and closer to real time, with other snakes making decisions on the same board at the same time.</p>
+    <p>tomoko uses <span class="hex-code" style="--swatch-color: #137a63">#137a63</span>, a deep teal, for light mode, and <span class="hex-code" style="--swatch-color: #a8e6cf">#a8e6cf</span>, a soft mint, for dark mode. anywhere that only supports a single colour but has a dark and light theme (for example discord embeds), it defaults to the mint, matching the site's current dark-mode default.</p>
+    <p>more games will get added as tomoko goes, each one another small specialist bolted onto the same personality.</p>
+</div>
+
 </body>
-
-<script type="module" src="viewer.js"></script>
+<script>
+    if (window.self !== window.top) document.body.classList.add("in-iframe");
+</script>
 </html>
