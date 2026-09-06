@@ -71,9 +71,10 @@ body {
 
 .desktop {
     gap: 5rem;
-    width: 4rem;
     margin: 2rem;
-    justify-content: center;
+    flex-direction: column;
+    height: calc(100vh - 6rem);
+    width: fit-content;
 }
 
 .folder .app-icon {

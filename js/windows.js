@@ -78,7 +78,7 @@ export class ProjectsWindow extends Window {
                 </div>
                 
                 <div class="app-icon" id="tomoko">
-                <i class="fa-solid fa-chess-knight"></i>
+                <i class="fa-solid fa-brain"></i>
                     <span data-app="app" class="app-label">tomoko.py</span>
                 </div>
             </div>
@@ -124,32 +124,32 @@ export class SocialsWindow extends Window {
         super("folder socials", `${locale.apps.socials}`, `
             <div class="folder-items">
                 <div class="app-icon" id="github">
-                    <img class="icon-img" src="assets/github${isDark}.svg"></img>
+                    <img class="icon-img" src="assets/icons/github${isDark}.svg"></img>
                     <span class="app-label">github.web</span>
                 </div>
     
                 <div class="app-icon" id="youtube">
-                    <img class="icon-img" src="assets/youtube.svg"></img>
+                    <img class="icon-img" src="assets/icons/youtube.svg"></img>
                     <span class="app-label">youtube.web</span>
                 </div>
     
                 <div class="app-icon" id="instagram">
-                    <img class="icon-img" src="assets/instagram.svg"></img>
+                    <img class="icon-img" src="assets/icons/instagram.svg"></img>
                     <span class="app-label">instagram.web</span>
     
                 </div>
     
                 <div class="app-icon" id="pronouns-page"">
-                    <img class="icon-img" src="assets/pronouns.page.svg"></img>
+                    <img class="icon-img" src="assets/icons/pronouns.page.svg"></img>
                     <span class="app-label">pronouns.page.web</span>
                 </div>
     
                 <div class="app-icon" id="twitter">
-                    <img class="icon-img" src="assets/twitter.svg"></img>
+                    <img class="icon-img" src="assets/icons/twitter.svg"></img>
                     <span class="app-label">twitter.web</span>
                 </div>
                 <div class="app-icon" id="modrinth">
-                    <img class="icon-img" src="assets/modrinth.svg"></img>
+                    <img class="icon-img" src="assets/icons/modrinth.svg"></img>
                     <span class="app-label">modrinth.web</span>
                 </div>
             </div>
@@ -169,12 +169,12 @@ export class ModsWindow extends Window {
         super("folder mods", `${locale.apps.mods}`, `
             <div class="folder-items">
                 <div class="app-icon" id="chiyoko">
-                    <img class="icon-img" src="assets/modrinth.svg"></img>
+                    <img class="icon-img" src="assets/icons/modrinth.svg"></img>
                     <span class="app-label">chiyoko.jar</span>
                 </div>
     
                 <div class="app-icon" id="opentolanfix">
-                    <img class="icon-img" src="assets/modrinth.svg"></img>
+                    <img class="icon-img" src="assets/icons/modrinth.svg"></img>
                     <span class="app-label">open-to-lan-fix.jar</span>
                 </div>
             </div>
@@ -185,6 +185,43 @@ export class ModsWindow extends Window {
         el.querySelector("#opentolanfix").addEventListener("click", () => new PopupWindow(locale, "link", "https://modrinth.com/mod/open-to-lan-fix", "mods"));
     }
 }
+
+export class FriendsWindow extends Window {
+    constructor(locale) {
+        super("folder friends", `${locale.apps.friends}`, `
+            <div class="folder-items">
+
+                <div class="app-icon" id="CrystalSRL">
+                    <img class="icon-img" src="assets/people/crystalsrl.jpg"></img>
+                    <span class="app-label">crystal</span>
+                </div>
+                <div class="app-icon" id="M8use">
+                    <img class="icon-img" src="assets/people/m8use.png"></img>
+                    <span class="app-label">m8use</span>
+                </div>
+                <div class="app-icon" id="Meox_">
+                    <img class="icon-img" src="assets/people/meox.webp"></img>
+                    <span class="app-label">meox</span>
+                </div>
+                <div class="app-icon" id="Abril">
+                    <img class="icon-img" src="assets/people/abril.webp"></img>
+                    <span class="app-label">abi</span>
+                </div>
+                <div class="app-icon" id="fanda857">
+                    <img class="icon-img" src="assets/people/fanda.jpg"></img>
+                    <span class="app-label">fanda</span>
+                </div>
+            </div>
+        `)
+        const el = this.el;
+        el.querySelector("#CrystalSRL").addEventListener("click", () => new PopupWindow(locale, "link", "https://crystalsrl.carrd.co/", "friends"));
+        el.querySelector("#M8use").addEventListener("click", () => new PopupWindow(locale, "link", "https://m8use.com", "friends"));
+        el.querySelector("#Meox_").addEventListener("click", () => new PopupWindow(locale, "link", "https://meox.moe/user/meox/about/meox_.html", "friends"));
+        el.querySelector("#Abril").addEventListener("click", () => new PopupWindow(locale, "link", "https://tilde.town/~abril/", "friends"));
+        el.querySelector("#fanda857").addEventListener("click", () => new PopupWindow(locale, "link", "https://seedcrack.com/", "friends"));
+    }
+}
+
 export class SpeedrunsWindow extends Window {
     constructor(locale) {
         let isDark = localStorage.getItem("mainDarkMode") == "true" ? "" : "-dark"

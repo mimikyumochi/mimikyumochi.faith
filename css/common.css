@@ -48,7 +48,7 @@ html.dark {
 body {
     background: 
         linear-gradient(rgb(0, 0, 0, var(--bg-alpha)) 0 0),
-        url(../assets/bg.jpg);
+        url(../assets/wallpapers/bg.jpg);
 
     font-family: sans-serif;
     overflow: hidden;
@@ -273,7 +273,7 @@ a:hover {
 .app-icon.folder .app-label {
     position: absolute !important;
     left: 5% !important;
-    top: 75% !important;
+    top: 95% !important;
 
     text-align: center;
     width: 20ch;
