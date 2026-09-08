@@ -190,10 +190,29 @@ export class FriendsWindow extends Window {
     constructor(locale) {
         super("folder friends", `${locale.apps.friends}`, `
             <div class="folder-items">
-
+                <div class="app-icon" id="Abril">
+                    <img class="icon-img" src="assets/people/abril.webp"></img>
+                    <span class="app-label">abi</span>
+                </div>
                 <div class="app-icon" id="CrystalSRL">
                     <img class="icon-img" src="assets/people/crystalsrl.jpg"></img>
                     <span class="app-label">crystal</span>
+                </div>
+                <div class="app-icon" id="cylscooler">
+                    <img class="icon-img" src="assets/people/cylscooler.png"></img>
+                    <span class="app-label">cyl</span>
+                </div>
+                <div class="app-icon" id="eira">
+                    <img class="icon-img" src="assets/people/eira.png"></img>
+                    <span class="app-label">eira</span>
+                </div>   
+                <div class="app-icon" id="fanda857">
+                    <img class="icon-img" src="assets/people/fanda.jpg"></img>
+                    <span class="app-label">fanda</span>
+                </div>   
+                <div class="app-icon" id="lunar">
+                    <img class="icon-img" src="assets/people/lunar.jpg"></img>
+                    <span class="app-label">lunar</span>
                 </div>
                 <div class="app-icon" id="M8use">
                     <img class="icon-img" src="assets/people/m8use.png"></img>
@@ -203,22 +222,49 @@ export class FriendsWindow extends Window {
                     <img class="icon-img" src="assets/people/meox.webp"></img>
                     <span class="app-label">meox</span>
                 </div>
-                <div class="app-icon" id="Abril">
-                    <img class="icon-img" src="assets/people/abril.webp"></img>
-                    <span class="app-label">abi</span>
+                <div class="app-icon" id="showme7">
+                    <img class="icon-img" src="assets/people/showme7.png"></img>
+                    <span class="app-label">showme7</span>
                 </div>
-                <div class="app-icon" id="fanda857">
-                    <img class="icon-img" src="assets/people/fanda.jpg"></img>
-                    <span class="app-label">fanda</span>
-                </div>
+
             </div>
         `)
         const el = this.el;
+        el.querySelector("#Abril").addEventListener("click", () => new PopupWindow(locale, "link", "https://tilde.town/~abril/", "friends"));
         el.querySelector("#CrystalSRL").addEventListener("click", () => new PopupWindow(locale, "link", "https://crystalsrl.carrd.co/", "friends"));
+        el.querySelector("#eira").addEventListener("click", () => new PopupWindow(locale, "link", "https://en.pronouns.page/@eirasv", "friends"));
+        el.querySelector("#fanda857").addEventListener("click", () => new PopupWindow(locale, "link", "https://seedcrack.com/", "friends"));
+        el.querySelector("#lunar").addEventListener("click", () => new PopupWindow(locale, "link", "https://en.pronouns.page/@sleepyylunar", "friends"));
         el.querySelector("#M8use").addEventListener("click", () => new PopupWindow(locale, "link", "https://m8use.com", "friends"));
         el.querySelector("#Meox_").addEventListener("click", () => new PopupWindow(locale, "link", "https://meox.moe/user/meox/about/meox_.html", "friends"));
-        el.querySelector("#Abril").addEventListener("click", () => new PopupWindow(locale, "link", "https://tilde.town/~abril/", "friends"));
-        el.querySelector("#fanda857").addEventListener("click", () => new PopupWindow(locale, "link", "https://seedcrack.com/", "friends"));
+
+        el.querySelector("#cylscooler").addEventListener("click", (e) => {
+            e.stopPropagation();
+            new CylscoolerWindow(locale)
+        });
+        el.querySelector("#showme7").addEventListener("click", (e) => {
+            e.stopPropagation();
+            new ShowMe7Window(locale)
+        });
+    }
+}
+
+export class CylscoolerWindow extends Window {
+    constructor(locale) {
+        super("cylscooler", `cylscooler`, `
+                
+                <iframe src="abouts/cylscooler.html" style="width: 100%; height: 100%; zoom: 0.7; border: none;" id="cylscooler-iframe"></iframe>
+
+            `)
+    }
+}
+export class ShowMe7Window extends Window {
+    constructor(locale) {
+        super("showme7", `showme7`, `
+                
+                <iframe src="abouts/showme7.html" style="width: 100%; height: 100%; zoom: 0.7; border: none;" id="showme7-iframe"></iframe>
+
+            `)
     }
 }
 

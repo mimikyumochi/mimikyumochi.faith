@@ -190,7 +190,9 @@ a:hover {
     };
 
 }
-
+.showme7-window .content {
+    background-color: rgb(var(--bg1), 1) !important;
+}
 
 .folder .content {
     text-align: center;
