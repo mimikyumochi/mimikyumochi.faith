@@ -2,32 +2,19 @@
 <html>
     <head>
         <title>page not found</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" />
+        <link rel="stylesheet" href="/css/tokens.css" />
+        <link rel="stylesheet" href="/css/base.css" />
         <style>
-            @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
-
-            * {
-                font-family: "Quicksand", sans-serif;
-            }
-
             body {
-                background-color: #1c1c1c;
+                background-color: var(--page-bg);
                 color: white;
                 text-align: center;
             }
 
             div {
                 height: fit-content;
-                background-image: linear-gradient(
-                    0deg,
-                    #5bcefa 20%,
-                    #f5a9b8 20%,
-                    40%,
-                    #ffffff 40%,
-                    60%,
-                    #f5a9b8 60%,
-                    80%,
-                    #5bcefa 80%
-                );
+                background-image: linear-gradient(0deg, var(--trans-flag));
                 background-clip: text;
             }
 

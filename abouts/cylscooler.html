@@ -3,18 +3,18 @@
     <head>
         <meta charset="UTF-8" />
         <title>showme7 :3</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" />
+        <link rel="stylesheet" href="/css/tokens.css" />
+        <link rel="stylesheet" href="/css/base.css" />
     </head>
 
     <style>
-        @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
-
         body {
             overflow: hidden;
             margin: 1ch;
             width: 100vw;
             height: 100vh;
 
-            font-family: "Quicksand", sans-serif;
             font-size: 2rem;
 
             background: #251237;
@@ -36,19 +36,27 @@
         }
         a {
             text-decoration: none;
-            color: #dcaef0;
+            --link: #dcaef0;
             border: 2px solid #dcaef0;
             width: 25%;
             text-align: center;
             padding: 0.5rem;
             border-radius: 10ch;
+            /* the width above doesn't include the padding */
+            box-sizing: content-box;
+        }
+        a:hover {
+            text-decoration: none;
         }
     </style>
 
     <body>
         <h1>cyl :3</h1>
         <div class="links">
-            <a href="https://open.spotify.com/user/5v4aoetud6yst0a0qmpkc34zp?si=434c7b7157094977" class="spotify"
+            <a
+                href="https://open.spotify.com/user/5v4aoetud6yst0a0qmpkc34zp?si=434c7b7157094977"
+                class="spotify"
+                target="_blank"
                 >spotify</a
             >
             <a class="discord">discord: cylscooler</a>

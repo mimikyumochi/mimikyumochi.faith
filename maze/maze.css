@@ -14,15 +14,13 @@
 }
 
 .dark-theme {
-    --bg: #1c1c1c;
+    --bg: var(--page-bg);
     --text: white;
     --button-bg: #2c2c2c;
     --button-bg-hover: #3c3c3c;
 }
 
 body {
-    margin: 0;
-    font-family: "Quicksand", sans-serif;
     background-color: var(--bg);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

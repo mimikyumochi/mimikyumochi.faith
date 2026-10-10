@@ -32,7 +32,7 @@ body {
 }
 
 .hand {
-    background: #aa7bff;
+    background: var(--accent);
     width: 0.2vw;
     height: 1vw;
     position: absolute;
@@ -55,13 +55,15 @@ a {
     position: fixed;
     bottom: 1rem;
     right: 2rem;
-    color: #aa7bff;
     background: #333;
     padding: 0.5rem 1rem;
     border-radius: 1vh;
     text-decoration: none;
     font-family: sans-serif;
     font-size: 1.2rem;
+}
+a:hover {
+    text-decoration: none;
 }
 
 @media only screen and (max-width: 1000px) {

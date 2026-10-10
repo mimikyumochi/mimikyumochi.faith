@@ -1,14 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
-
 body {
-    font-family: "Quicksand", sans-serif;
     font-size: 1.2rem;
     font-weight: bold;
     width: 100vw;
     height: 100vh;
-    margin: 0;
     color: white;
-    background: #1c1c1c;
+    background: var(--page-bg);
     display: flex;
     justify-content: center;
 }
@@ -31,11 +27,7 @@ body:not(.in-iframe) {
 }
 
 a {
-    color: #a8e6cf;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
+    --link: #a8e6cf;
 }
 .hex-code {
     font-size: 1rem;
@@ -59,7 +51,6 @@ a:hover {
 @media only screen and (max-width: 999px) {
     body {
         font-size: 1rem;
-        margin: 0;
     }
     div {
         transform: scale(0.9);

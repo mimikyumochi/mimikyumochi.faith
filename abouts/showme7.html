@@ -3,21 +3,21 @@
     <head>
         <meta charset="UTF-8" />
         <title>showme7 :3</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" />
+        <link rel="stylesheet" href="/css/tokens.css" />
+        <link rel="stylesheet" href="/css/base.css" />
     </head>
 
     <style>
-        @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
-
         body {
             position: relative;
             margin: 1ch;
             width: 100vw;
             height: 100vh;
 
-            font-family: "Quicksand", sans-serif;
             font-size: 1.5rem;
 
-            background: #1c1c1c;
+            background: var(--page-bg);
             color: #ff88ff;
         }
 
@@ -27,7 +27,11 @@
         }
 
         a {
-            color: #ffccff;
+            --link: #ffccff;
+        }
+        a:link,
+        a:visited {
+            text-decoration: underline;
         }
 
         .seed-container {
@@ -60,7 +64,8 @@
         <h1>ShowMe7 :3</h1>
         <p>
             Hi! My name is ShowMe7. I love minecraft seedfinding and I make awesome
-            <a href="https://www.youtube.com/@ShowMe7.">YouTube</a> videos on the seeds I find interesting!
+            <a href="https://www.youtube.com/@ShowMe7." target="_blank">YouTube</a> videos on the seeds I find
+            interesting!
         </p>
         <div class="seeds-container">
             <div class="big-island seed-container">
