@@ -6,50 +6,19 @@ export class PopupWindow extends Window {
         const locale = getLocale();
 
         const content = document.createElement("div");
-        content.classList.add("content");
+        content.classList.add("popup");
 
         // main message for the pop up
-
         const msg = document.createElement("p");
-
-        if (type == "link") {
-            msg.textContent = locale.popup.link;
-            msg.setAttribute("data-i18n", "popup.link");
-        } else if (type == "file") {
-            msg.textContent = locale.popup.file;
-            msg.setAttribute("data-i18n", "popup.file");
-        }
+        msg.classList.add("popup__message");
+        msg.textContent = locale.popup[type];
+        msg.dataset.i18n = `popup.${type}`;
         content.appendChild(msg);
 
-        // yes no buttons
-        const buttons = document.createElement("div");
-        buttons.classList.add("popup-buttons");
-
-        const confirmBtn = document.createElement("button");
-        confirmBtn.textContent = locale.popup.yes;
-        confirmBtn.classList.add("confirm-btn");
-        confirmBtn.setAttribute("data-i18n", "popup.yes");
-
-        const cancelBtn = document.createElement("button");
-        cancelBtn.textContent = locale.popup.no;
-        cancelBtn.classList.add("cancel-btn");
-        cancelBtn.setAttribute("data-i18n", "popup.no");
-
-        buttons.appendChild(confirmBtn);
-        buttons.appendChild(cancelBtn);
-
-        // browser selector for mobile popup, will add more browsers later
+        // shows which browser the link opens in on mobile
         if (!window.matchMedia("(min-width: 768px)").matches) {
-            const browserContainer = document.createElement("div");
-            browserContainer.classList.add("browser");
-
-            const browserInfo = document.createElement("div");
-            browserInfo.classList.add("browser-info");
-
-            let ua = navigator.userAgent;
+            const ua = navigator.userAgent;
             let browser = "chrome"; // assume user is on chrome before checking due to market share.
-
-            // update browser if user agent contains its info
             if (/Firefox/i.test(ua)) {
                 browser = "firefox";
             } else if (/Edg/i.test(ua)) {
@@ -58,32 +27,44 @@ export class PopupWindow extends Window {
                 browser = "safari";
             }
 
+            const browserInfo = document.createElement("div");
+            browserInfo.classList.add("popup__browser");
+
             const browserImg = document.createElement("img");
-            browserImg.classList.add("browser-img");
+            browserImg.classList.add("popup__browser-icon");
             browserImg.src = `assets/browsers/${browser}.svg`;
-            browserInfo.appendChild(browserImg);
+            browserImg.alt = "";
 
-            const browserName = document.createElement("p");
+            const browserName = document.createElement("span");
             browserName.textContent = browser;
-            browserName.classList.add("browser-name");
-            browserInfo.appendChild(browserName);
 
-            browserContainer.appendChild(browserInfo);
-
-            const browserRadio = document.createElement("input");
-            browserRadio.type = "radio";
-            browserRadio.checked = true;
-            browserContainer.appendChild(browserRadio);
-
-            content.appendChild(browserContainer);
+            browserInfo.append(browserImg, browserName);
+            content.appendChild(browserInfo);
         }
 
+        // yes no buttons
+        const buttons = document.createElement("div");
+        buttons.classList.add("popup__buttons");
+
+        const confirmBtn = document.createElement("button");
+        confirmBtn.textContent = locale.popup.yes;
+        confirmBtn.classList.add("btn", "btn--confirm");
+        confirmBtn.dataset.i18n = "popup.yes";
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.textContent = locale.popup.no;
+        cancelBtn.classList.add("btn", "btn--cancel");
+        cancelBtn.dataset.i18n = "popup.no";
+
+        buttons.append(confirmBtn, cancelBtn);
         content.appendChild(buttons);
 
-        super(`${creator} popup`, locale.popup.title, content);
+        super(`${creator} popup`, locale.popup.title, content, "popup.title");
+        this.owner = creator.replace(/^folder /, "");
+
         confirmBtn.onclick = () => {
             this.close();
-            window.open(url, "_blank");
+            window.open(url, "_blank", "noopener");
         };
         cancelBtn.onclick = () => this.close();
     }

@@ -1,109 +1,121 @@
-import { closeTopWindow } from "./util.js";
-
 export const windowOrder = [];
+const openWindows = new Map();
+
+// "folder projects" -> "projects"
+const appId = (type) => type.replace(/^folder /, "");
+const taskbarIcon = (type) => document.querySelector(`#taskbar [data-app="${appId(type)}"]`);
+const kindOf = (type) => (type.endsWith(" popup") ? "popup" : type.startsWith("folder ") ? "folder" : type);
+const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export function updateWindowOrder(type) {
-    var index = windowOrder.indexOf(type);
+    if (!openWindows.has(type)) return;
 
-    if (index !== -1) {
-        windowOrder.splice(index, 1);
-    }
+    const index = windowOrder.indexOf(type);
+    if (index !== -1) windowOrder.splice(index, 1);
     windowOrder.unshift(type);
 
     let zIndex = 100;
     for (const windowType of windowOrder) {
-        const el = document.getElementsByClassName(`${windowType}-window`)[0];
-        if (el) {
-            el.style.zIndex = zIndex;
-        }
+        openWindows.get(windowType).el.style.zIndex = zIndex;
         zIndex--;
     }
 
-    const icons = document.querySelectorAll("#active-windows .app-icon");
-    icons.forEach((icon) => {
-        const iconType = icon.id.split("-").pop();
-        if (iconType === type) {
-            icon.classList.add("selected");
-        } else {
-            icon.classList.remove("selected");
-        }
-    });
+    for (const icon of document.querySelectorAll("#taskbar [data-app]")) {
+        icon.classList.toggle("is-focused", icon.dataset.app === appId(type));
+    }
+}
+
+export function focusApp(id) {
+    const type = [...openWindows.keys()].find((t) => appId(t) === id);
+    if (type) updateWindowOrder(type);
+}
+
+export function closeTopWindow() {
+    openWindows.get(windowOrder[0])?.close();
 }
 
 export class Window {
-    constructor(type, title, content) {
+    constructor(type, title, content, titleKey) {
         this.type = type;
-
+        this.kind = kindOf(type);
         this.isMobile = !window.matchMedia("(min-width: 768px)").matches;
 
         this.title = title;
+        this.titleKey = titleKey;
         this.content = content;
+
+        // a new popup replaces the old one instead of focusing it
+        if (this.kind === "popup") openWindows.get(type)?.close();
+
+        if (openWindows.has(type)) {
+            updateWindowOrder(type);
+            return;
+        }
+        if (this.isMobile && this.kind !== "popup") closeTopWindow();
+
         this.el = this.createWindow();
-        if (!this.el) return;
-        document.getElementsByClassName("windows")[0].appendChild(this.el);
-        updateWindowOrder(this.type);
+        openWindows.set(type, this);
+        document.querySelector(".windows").appendChild(this.el);
+        updateWindowOrder(type);
+
+        const icon = taskbarIcon(type);
+        if (icon) icon.hidden = false;
+
         this.makeDraggable();
         this.addResizers();
 
-        setTimeout(() => {
-            this.el.classList.add("open");
-        }, 10);
+        setTimeout(() => this.el.classList.add("is-open"), 10);
     }
 
     createWindow() {
-        if (document.getElementsByClassName(`${this.type}-window window`).length != 0) return;
+        const win = document.createElement("section");
+        win.className = `window window--${this.kind}`;
 
-        try {
-            document.querySelector(`#active-windows-${this.type}`).classList.toggle("hidden");
-        } catch (error) {
-            console.log(`${this.type} does not have an active window icon`);
-        }
+        const titlebar = document.createElement("header");
+        titlebar.className = "window__titlebar";
 
-        const win = document.createElement("div");
-        win.className = `${this.type}-window window`;
+        const title = document.createElement("span");
+        title.className = "window__title";
+        title.textContent = this.title;
+        if (this.titleKey) title.dataset.i18n = this.titleKey;
 
-        var closebtnStr = "x";
-        if (this.isMobile) closebtnStr = `<i class="fa-solid fa-house"></i>`;
-        if (this.isMobile && !this.type.includes("popup")) closeTopWindow();
-        win.innerHTML = `<div class="${this.type}-titlebar titlebar"><p data-i18n="${this.type}.title">${this.title}</p> <button class='close-btn'><span>${closebtnStr}</span></button></div>`;
+        const close = document.createElement("button");
+        close.className = "window__close";
+        close.setAttribute("aria-label", "close");
+        close.innerHTML = this.isMobile ? `<i class="fa-solid fa-house" aria-hidden="true"></i>` : "×";
+        close.addEventListener("click", () => this.close());
 
-        if (!navigator.userAgent.toLowerCase().includes("iphone")) {
-            win.classList.add("android");
-        }
+        titlebar.append(title, close);
 
-        if (this.content instanceof HTMLElement) {
-            win.appendChild(this.content);
-        } else {
-            win.innerHTML = win.innerHTML + `<div class="content">${this.content}</div>`;
-        }
+        const content = document.createElement("div");
+        content.className = "window__content";
+        if (this.content instanceof HTMLElement) content.append(this.content);
+        else content.innerHTML = this.content;
 
-        win.querySelector(".close-btn").addEventListener("click", () => this.close());
-
-        win.onclick = () => updateWindowOrder(this.type);
+        win.append(titlebar, content);
+        win.addEventListener("pointerdown", () => updateWindowOrder(this.type));
 
         return win;
     }
 
     addResizers() {
-        if (this.type == "popup") return;
+        if (this.isMobile || this.kind === "popup") return;
 
-        const directions = ["n", "e", "s", "w", "ne", "nw", "se", "sw"];
-        directions.forEach((dir) => {
+        for (const dir of ["n", "e", "s", "w", "ne", "nw", "se", "sw"]) {
             const r = document.createElement("div");
-            r.className = `resizer ${dir}`;
+            r.className = "resizer";
+            r.dataset.dir = dir;
             this.el.appendChild(r);
-        });
+        }
 
         const el = this.el;
-
         let startX, startY, startWidth, startHeight, startLeft, startTop, activeDir;
 
-        function resizePointerDown(e) {
-            const resizer = e.target;
-            if (!resizer.classList.contains("resizer")) return;
+        const resizePointerDown = (e) => {
+            if (!e.target.classList.contains("resizer")) return;
             e.preventDefault();
 
-            activeDir = [...resizer.classList].find((c) => directions.includes(c));
+            activeDir = e.target.dataset.dir;
             startX = e.clientX;
             startY = e.clientY;
 
@@ -113,11 +125,12 @@ export class Window {
             startLeft = rect.left;
             startTop = rect.top;
 
+            el.classList.add("is-dragging");
             document.addEventListener("pointermove", elementResize);
             document.addEventListener("pointerup", stopResizeElement);
             updateWindowOrder(this.type);
-        }
-        function elementResize(e) {
+        };
+        const elementResize = (e) => {
             e.preventDefault();
             const dx = e.clientX - startX;
             const dy = e.clientY - startY;
@@ -149,114 +162,90 @@ export class Window {
             if (newHeight != 300) {
                 el.style.top = newTop + "px";
             }
-        }
+        };
         const stopResizeElement = () => {
+            el.classList.remove("is-dragging");
             document.removeEventListener("pointermove", elementResize);
             document.removeEventListener("pointerup", stopResizeElement);
         };
 
-        this.el.addEventListener("pointerdown", resizePointerDown);
+        el.addEventListener("pointerdown", resizePointerDown);
     }
 
     makeDraggable() {
         if (this.isMobile) return;
 
-        var pos1 = 0,
-            pos2 = 0,
-            pos3 = 0,
-            pos4 = 0;
+        let lastX = 0;
+        let lastY = 0;
         const el = this.el;
-        const winType = this.type;
 
         const Xmargin = 700;
         const Ymargin = 486;
 
-        const titleBar = document.getElementsByClassName(`${this.type}-titlebar`)[0];
-        const iframe = el.querySelector("iframe");
-        let dragging = false;
+        const titleBar = el.querySelector(".window__titlebar");
 
-        titleBar.addEventListener("pointerdown", dragPointerDown);
-
-        function dragPointerDown(e) {
-            e = e || window.event;
+        const elementDrag = (e) => {
             e.preventDefault();
 
-            if (e.target.closest(".close-btn")) {
-                return;
-            }
-
-            dragging = true;
-
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-
-            try {
-                titleBar.setPointerCapture(e.pointerId);
-            } catch (err) {}
-            titleBar.addEventListener("pointermove", elementDrag);
-            titleBar.addEventListener("pointerup", closeDragElement);
-            titleBar.addEventListener("pointercancel", closeDragElement);
-
-            if (iframe) iframe.style.pointerEvents = "none";
-        }
-        function elementDrag(e) {
-            if (!dragging) return;
-            e = e || window.event;
-            e.preventDefault();
-
-            updateWindowOrder(winType);
-
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-
-            let newLeft = el.offsetLeft - pos1;
-            let newTop = el.offsetTop - pos2;
+            const dx = lastX - e.clientX;
+            const dy = lastY - e.clientY;
+            lastX = e.clientX;
+            lastY = e.clientY;
 
             const maxX = window.innerWidth - el.offsetWidth + Xmargin;
             const maxY = window.innerHeight - el.offsetHeight + Ymargin;
 
-            newLeft = Math.max(-Xmargin, Math.min(newLeft, maxX));
-            newTop = Math.max(40, Math.min(newTop, maxY));
+            el.style.left = Math.max(-Xmargin, Math.min(el.offsetLeft - dx, maxX)) + "px";
+            el.style.top = Math.max(40, Math.min(el.offsetTop - dy, maxY)) + "px";
+        };
+        const closeDragElement = (e) => {
+            el.classList.remove("is-dragging");
+            titleBar.releasePointerCapture(e.pointerId);
+            titleBar.removeEventListener("pointermove", elementDrag);
+            titleBar.removeEventListener("pointerup", closeDragElement);
+            titleBar.removeEventListener("pointercancel", closeDragElement);
+        };
 
-            el.style.left = newLeft + "px";
-            el.style.top = newTop + "px";
-        }
+        titleBar.addEventListener("pointerdown", (e) => {
+            if (e.target.closest(".window__close")) return;
+            e.preventDefault();
 
-        function closeDragElement() {
-            dragging = false;
-            try {
-                titleBar.releasePointerCapture(e.pointerId);
-            } catch (err) {}
+            lastX = e.clientX;
+            lastY = e.clientY;
 
-            if (iframe) iframe.style.pointerEvents = "auto";
-        }
+            el.classList.add("is-dragging");
+            titleBar.setPointerCapture(e.pointerId);
+            titleBar.addEventListener("pointermove", elementDrag);
+            titleBar.addEventListener("pointerup", closeDragElement);
+            titleBar.addEventListener("pointercancel", closeDragElement);
+        });
     }
+
     close() {
-        try {
-            document.querySelector(`#active-windows-${this.type}`).classList.toggle("hidden");
-        } catch (error) {
-            console.log(`${this.type} does not have an active window icon`);
+        if (openWindows.get(this.type) !== this) return;
+        openWindows.delete(this.type);
+        windowOrder.splice(windowOrder.indexOf(this.type), 1);
+
+        const icon = taskbarIcon(this.type);
+        if (icon) {
+            icon.hidden = true;
+            icon.classList.remove("is-focused");
+        }
+        if (windowOrder.length) updateWindowOrder(windowOrder[0]);
+
+        for (const win of [...openWindows.values()]) {
+            if (win.owner === appId(this.type)) win.close();
         }
 
-        const isReduced =
-            window.matchMedia(`(prefers-reduced-motion: reduce)`) === true ||
-            window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
-        if (!!isReduced) {
+        // popups never animate, so they'd never get a transitionend
+        if (this.kind === "popup" || prefersReducedMotion()) {
             this.el.remove();
             return;
         }
 
-        let el = document.querySelector(`.${this.type}.popup-window`);
-        console.log(el);
-        if (el != null) {
-            el.remove();
-        }
-
-        this.el.classList.remove("open");
-        this.el.addEventListener("transitionend", () => {
-            this.el.remove();
+        this.el.classList.remove("is-open");
+        this.el.addEventListener("transitionend", (e) => {
+            if (e.target === this.el) this.el.remove();
         });
     }
 }

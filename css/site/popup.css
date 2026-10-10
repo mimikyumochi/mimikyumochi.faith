@@ -1,0 +1,105 @@
+.window--popup {
+    /* !important beats the inline z-index from window-manager */
+    z-index: var(--z-popup) !important;
+    top: calc(50vh - 5rem);
+    left: calc(50vw - 20rem);
+    width: 20rem;
+    height: auto;
+
+    transform: none;
+
+    .window__close {
+        display: none;
+    }
+
+    .window__content {
+        background: rgb(var(--bg2));
+        border-color: rgb(var(--bg3));
+    }
+
+    @media (width < 768px) {
+        top: 50vh;
+        left: 10vw;
+        width: 80vw;
+        height: auto;
+
+        &::after,
+        .window__titlebar {
+            display: none;
+        }
+    }
+}
+
+.popup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+
+    @media (width < 768px) {
+        gap: 2rem;
+        padding-bottom: 5vh;
+    }
+}
+
+.popup__message {
+    width: 90%;
+    margin: 0;
+    padding: 1ch 0;
+
+    text-align: center;
+    background: rgb(var(--bg3));
+    border-radius: var(--radius-sm);
+
+    @media (width < 768px) {
+        width: 70%;
+        padding: 0;
+
+        font-size: 1.5rem;
+        font-weight: bold;
+        background: none;
+    }
+}
+
+.popup__browser {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.popup__browser-icon {
+    width: 2rem;
+    height: 2rem;
+}
+
+.popup__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+
+    background: rgb(var(--btn) / var(--btn-alpha, 1));
+    border: none;
+    border-radius: var(--radius-md);
+
+    cursor: pointer;
+
+    &:hover {
+        --btn-alpha: 0.5;
+    }
+
+    &:focus-visible {
+        outline: 2px solid rgb(var(--text1));
+        outline-offset: 2px;
+    }
+}
+.btn--confirm {
+    --btn: var(--confirm);
+    font-weight: bold;
+}
+.btn--cancel {
+    --btn: var(--cancel);
+}

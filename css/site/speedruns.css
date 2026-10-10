@@ -1,0 +1,43 @@
+.speedruns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.speedruns__game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.speedruns__title {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.pb {
+    display: flex;
+    margin: 0;
+
+    font-weight: bold;
+    white-space: nowrap;
+    color: rgb(var(--bg1));
+}
+
+.pb__category,
+.pb__time {
+    padding: 0.6ch;
+}
+
+.pb__category {
+    background: rgb(var(--text1));
+    border-radius: var(--radius-pill) 0 0 var(--radius-pill);
+}
+
+.pb__time {
+    background: rgb(var(--accent-green));
+    border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+}

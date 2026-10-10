@@ -2,19 +2,38 @@ import { Window } from "./windowBase.js";
 import { PopupWindow } from "./popupWindow.js";
 import { getFromLocale, toggleTheme, loadLang } from "./util.js";
 
+const heartCard = (locale, section, key, colour) => `
+    <li class="card" style="--icon-colour: ${colour}" data-i18n="${section}.${key}">
+        <i class="fa-regular fa-heart" aria-hidden="true"></i> ${locale[section][key]}
+    </li>`;
+
+const specCard = (icon, text) => `<li class="card"><i class="${icon}" aria-hidden="true"></i> ${text}</li>`;
+
+const folderItem = (id, icon, label, extraClass = "") => `
+    <button class="app-icon app-icon--large ${extraClass}" id="${id}">${icon}${label}</button>`;
+
+const faIcon = (classes) => `<i class="${classes}" aria-hidden="true"></i>`;
+const imgIcon = (src) => `<img class="app-icon__img" src="${src}" alt="" />`;
+const plainLabel = (text) => `<span class="app-icon__label">${text}</span>`;
+const appLabel = (locale, key, ext) =>
+    `<span class="app-icon__label" data-app="${ext}" data-i18n="apps.${key}">${locale.apps[key]}.${locale.misc[ext]}</span>`;
+
+const iframe = (src, title, zoom = 0.7) => `
+    <div class="iframe-frame" style="--zoom: ${zoom}">
+        <iframe src="${src}" title="${title}"></iframe>
+    </div>`;
+
 export class AboutWindow extends Window {
     constructor(locale) {
         super(
             "about",
-            `${locale.about.title}`,
-            `
-                <p data-i18n="about.age"><i class="fa-regular fa-heart" style="color:lightskyblue"></i> ${locale.about.age}</p>
-                <p data-i18n="about.relationship"><i class="fa-regular fa-heart" style="color:lightskyblue"></i> ${locale.about.relationship}</p>
-                <p data-i18n="about.kotlin"><i class="fa-regular fa-heart" style="color:lightskyblue"></i> ${locale.about.kotlin}</p>
-                <p data-i18n="about.hatepeople"><i class="fa-regular fa-heart" style="color:lightskyblue"></i> ${locale.about.hatepeople}</p>
-                <p data-i18n="about.eepy"><i class="fa-regular fa-heart" style="color:lightskyblue"></i> ${locale.about.eepy}</p>
-                <p data-i18n="about.frontend"><i class="fa-regular fa-heart" style="color:lightskyblue"></i> ${locale.about.frontend}</p>
-            `,
+            locale.about.title,
+            `<ul class="card-list">
+                ${["age", "relationship", "kotlin", "hatepeople", "eepy", "frontend"]
+                    .map((key) => heartCard(locale, "about", key, "lightskyblue"))
+                    .join("")}
+            </ul>`,
+            "about.title",
         );
     }
 }
@@ -22,14 +41,13 @@ export class LikesWindow extends Window {
     constructor(locale) {
         super(
             "likes",
-            `${locale.likes.title}`,
-            `
-                <p data-i18n="likes.animals"><i class="fa-regular fa-heart" style="color:pink"></i> ${locale.likes.animals}</p>
-                <p data-i18n="likes.seedfind"><i class="fa-regular fa-heart" style="color:pink"></i> ${locale.likes.seedfind}</p>
-                <p data-i18n="likes.speedrun"><i class="fa-regular fa-heart" style="color:pink"></i> ${locale.likes.speedrun}</p>
-                <p data-i18n="likes.maze"><i class="fa-regular fa-heart" style="color:pink"></i> ${locale.likes.maze}</a></p>
-                <p data-i18n="likes.rlai"><i class="fa-regular fa-heart" style="color:pink"></i> ${locale.likes.rlai}</p>
-                `,
+            locale.likes.title,
+            `<ul class="card-list">
+                ${["animals", "seedfind", "speedrun", "maze", "rlai"]
+                    .map((key) => heartCard(locale, "likes", key, "pink"))
+                    .join("")}
+            </ul>`,
+            "likes.title",
         );
     }
 }
@@ -38,17 +56,23 @@ export class SpecsWindow extends Window {
     constructor(locale) {
         super(
             "specs",
-            `${locale.specs.title}`,
-            `
-                <p><i class="fa-solid fa-microchip"></i> AMD Ryzen 7 5700X</p>
-                <p><i class="fa-solid fa-memory"></i> 32 GB (4 x 8 GB) DDR4 3200</p>
-                <p><i class="fa-solid fa-hard-drive"></i> Samsung 980 Pro 1TB SSD
-                <p><i class="fa-solid fa-hard-drive"></i> Samsung 860 QVO 1TB SSD</p>
-                <p><i class="fa-solid fa-hard-drive"></i> Western Digital Blue 1TB HDD
-                <p><i class="fa-solid fa-hard-drive"></i> Seagate Exos 8TB HDD</p>
-                <p><i class="fa-solid fa-display"></i>MSI RTX 3060</p>
-                <p><a href="https://uk.pcpartpicker.com/list/gV3s9C" target="_blank" style="font-weight:bold"><i class="fa-solid fa-link"></i> ${locale.specs.link}</a></p>
-            `,
+            locale.specs.title,
+            `<ul class="card-list">
+                ${specCard("fa-solid fa-microchip", "AMD Ryzen 7 5700X")}
+                ${specCard("fa-solid fa-memory", "32 GB (4 x 8 GB) DDR4 3200")}
+                ${specCard("fa-solid fa-hard-drive", "Samsung 980 Pro 1TB SSD")}
+                ${specCard("fa-solid fa-hard-drive", "Samsung 860 QVO 1TB SSD")}
+                ${specCard("fa-solid fa-hard-drive", "Western Digital Blue 1TB HDD")}
+                ${specCard("fa-solid fa-hard-drive", "Seagate Exos 8TB HDD")}
+                ${specCard("fa-solid fa-display", "MSI RTX 3060")}
+                <li class="card">
+                    <a href="https://uk.pcpartpicker.com/list/gV3s9C" target="_blank">
+                        <i class="fa-solid fa-link" aria-hidden="true"></i>
+                        <span data-i18n="specs.link">${locale.specs.link}</span>
+                    </a>
+                </li>
+            </ul>`,
+            "specs.title",
         );
     }
 }
@@ -57,79 +81,49 @@ export class ProjectsWindow extends Window {
     constructor(locale) {
         super(
             "folder projects",
-            `${locale.apps.projects}`,
-            `
-            <div class="folder-items">
-                <div class="app-icon" id="connect4">
-                    <i class="fa-solid fa-circle" id="red" style="color: rgb(255, 93, 93);"></i>
-                    <i class="fa-solid fa-circle" id="yellow" style="color: rgb(255, 255, 158);"></i>
-                    <span data-app="app" class="app-label" data-i18n="apps.connect4">${locale.apps.connect4}.${locale.misc.app}</span>
-                </div>
-    
-                <div class="app-icon" id="maze-game">
-                    <i class="fa-solid fa-signs-post"></i>
-                    <span data-app="app" class="app-label" data-i18n="apps.maze">${locale.apps.maze}.${locale.misc.app}</span>
-                </div>
-    
-                <div class="app-icon" id="faithbot">
-                    <i class="fa-solid fa-robot"></i>
-                    <span data-app="py" class="app-label" data-i18n="apps.faithbot">${locale.apps.faithbot}.${locale.misc.py}</span>
-                </div>
-    
-                <div class="app-icon" id="mazegen">
-                    <i class="fa-solid fa-compass"></i>
-                    <span data-app="py" class="app-label" data-i18n="apps.mazegen">${locale.apps.mazegen}.${locale.misc.py}</span>
-                </div>
-    
-                <div class="app-icon" id="website">
-                    <i class="fa-solid fa-code"></i>
-                    <span data-app="web" class="app-label" data-i18n="apps.website">${locale.apps.website}.${locale.misc.web}</span>
-                </div>
-    
-                <div class="app-icon" id="clock">
-                    <i class="fa-solid fa-clock"></i>
-                    <span data-app="app" class="app-label" data-i18n="apps.clock">${locale.apps.clock}.${locale.misc.app}</span>
-                </div>
-                
-                <div class="app-icon" id="tomoko">
-                <i class="fa-solid fa-brain"></i>
-                    <span data-app="app" class="app-label">tomoko.py</span>
-                </div>
-            </div>
-
-
-            `,
+            locale.apps.projects,
+            `<div class="folder__grid">
+                ${folderItem(
+                    "connect4",
+                    `<i class="fa-solid fa-circle app-icon__disc app-icon__disc--red" aria-hidden="true"></i>
+                     <i class="fa-solid fa-circle app-icon__disc app-icon__disc--yellow" aria-hidden="true"></i>`,
+                    appLabel(locale, "connect4", "app"),
+                    "app-icon--connect4",
+                )}
+                ${folderItem("maze-game", faIcon("fa-solid fa-signs-post"), appLabel(locale, "maze", "app"))}
+                ${folderItem("faithbot", faIcon("fa-solid fa-robot"), appLabel(locale, "faithbot", "py"))}
+                ${folderItem("mazegen", faIcon("fa-solid fa-compass"), appLabel(locale, "mazegen", "py"))}
+                ${folderItem("website", faIcon("fa-solid fa-code"), appLabel(locale, "website", "web"))}
+                ${folderItem("clock", faIcon("fa-solid fa-clock"), appLabel(locale, "clock", "app"))}
+                ${folderItem("tomoko", faIcon("fa-solid fa-brain"), plainLabel("tomoko.py"))}
+            </div>`,
+            "apps.projects",
         );
+        if (!this.el) return;
 
         const el = this.el;
-        el.querySelector("#connect4").addEventListener("click", (e) => {
-            e.stopPropagation();
-            new Connect4Window(locale);
-        });
-
-        el.querySelector("#maze-game").addEventListener("click", (e) => {
-            e.stopPropagation();
-            new MazeGameWindow(locale);
-        });
-
-        el.querySelector("#faithbot").addEventListener("click", (e) => {
-            e.stopPropagation();
-            new PopupWindow(locale, "file", "https://github.com/mimikyumochi/FaithBot", "folder projects");
-        });
-
-        el.querySelector("#mazegen").addEventListener("click", (e) => {
-            e.stopPropagation();
-            new PopupWindow(locale, "file", "https://github.com/mimikyumochi/hunt-and-kill", "folder projects");
-        });
-
-        el.querySelector("#clock").addEventListener("click", (e) => {
-            e.stopPropagation();
-            new ClockWindow(locale);
-        });
-        el.querySelector("#tomoko").addEventListener("click", (e) => {
-            e.stopPropagation();
-            new TomokoWindow(locale);
-        });
+        el.querySelector("#connect4").addEventListener("click", () => new Connect4Window(locale));
+        el.querySelector("#maze-game").addEventListener("click", () => new MazeGameWindow(locale));
+        el.querySelector("#faithbot").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "file", "https://github.com/mimikyumochi/FaithBot", "folder projects"),
+        );
+        el.querySelector("#mazegen").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "file", "https://github.com/mimikyumochi/hunt-and-kill", "folder projects"),
+        );
+        el.querySelector("#website").addEventListener(
+            "click",
+            () =>
+                new PopupWindow(
+                    locale,
+                    "file",
+                    "https://github.com/mimikyumochi/mimikyumochi.github.io",
+                    "folder projects",
+                ),
+        );
+        el.querySelector("#clock").addEventListener("click", () => new ClockWindow(locale));
+        el.querySelector("#tomoko").addEventListener("click", () => new TomokoWindow(locale));
     }
 }
 export class SocialsWindow extends Window {
@@ -138,88 +132,46 @@ export class SocialsWindow extends Window {
 
         super(
             "folder socials",
-            `${locale.apps.socials}`,
-            `
-            <div class="folder-items">
-                <div class="app-icon" id="github">
-                    <img class="icon-img" src="assets/icons/github${isDark}.svg"></img>
-                    <span class="app-label">github.web</span>
-                </div>
-    
-                <div class="app-icon" id="youtube">
-                    <img class="icon-img" src="assets/icons/youtube.svg"></img>
-                    <span class="app-label">youtube.web</span>
-                </div>
-    
-                <div class="app-icon" id="instagram">
-                    <img class="icon-img" src="assets/icons/instagram.svg"></img>
-                    <span class="app-label">instagram.web</span>
-    
-                </div>
-    
-                <div class="app-icon" id="pronouns-page"">
-                    <img class="icon-img" src="assets/icons/pronouns.page.svg"></img>
-                    <span class="app-label">pronouns.page.web</span>
-                </div>
-    
-                <div class="app-icon" id="twitter">
-                    <img class="icon-img" src="assets/icons/twitter.svg"></img>
-                    <span class="app-label">twitter.web</span>
-                </div>
-                <div class="app-icon" id="modrinth">
-                    <img class="icon-img" src="assets/icons/modrinth.svg"></img>
-                    <span class="app-label">modrinth.web</span>
-                </div>
-            </div>
-            `,
+            locale.apps.socials,
+            `<div class="folder__grid">
+                ${folderItem("github", imgIcon(`assets/icons/github${isDark}.svg`), plainLabel("github.web"))}
+                ${folderItem("youtube", imgIcon("assets/icons/youtube.svg"), plainLabel("youtube.web"))}
+                ${folderItem("instagram", imgIcon("assets/icons/instagram.svg"), plainLabel("instagram.web"))}
+                ${folderItem("pronouns-page", imgIcon("assets/icons/pronouns.page.svg"), plainLabel("pronouns.page.web"))}
+                ${folderItem("twitter", imgIcon("assets/icons/twitter.svg"), plainLabel("twitter.web"))}
+                ${folderItem("modrinth", imgIcon("assets/icons/modrinth.svg"), plainLabel("modrinth.web"))}
+            </div>`,
+            "apps.socials",
         );
+        if (!this.el) return;
 
-        const el = this.el;
-        el.querySelector("#github").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://github.com/mimikyumochi", "socials"),
-        );
-        el.querySelector("#youtube").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://youtube.com/@mimikyumochii", "socials"),
-        );
-        el.querySelector("#instagram").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://instagram.com/mimikyumochi", "socials"),
-        );
-        el.querySelector("#pronouns-page").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://pronouns.page/@mimikyumochi", "socials"),
-        );
-        el.querySelector("#twitter").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://twitter.com/mimikyumochii", "socials"),
-        );
-        el.querySelector("#modrinth").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://modrinth.com/user/mimikyumochi", "socials"),
-        );
+        const links = {
+            github: "https://github.com/mimikyumochi",
+            youtube: "https://youtube.com/@mimikyumochii",
+            instagram: "https://instagram.com/mimikyumochi",
+            "pronouns-page": "https://pronouns.page/@mimikyumochi",
+            twitter: "https://twitter.com/mimikyumochii",
+            modrinth: "https://modrinth.com/user/mimikyumochi",
+        };
+        for (const [id, url] of Object.entries(links)) {
+            this.el
+                .querySelector(`#${id}`)
+                .addEventListener("click", () => new PopupWindow(locale, "link", url, "socials"));
+        }
     }
 }
 export class ModsWindow extends Window {
     constructor(locale) {
         super(
             "folder mods",
-            `${locale.apps.mods}`,
-            `
-            <div class="folder-items">
-                <div class="app-icon" id="chiyoko">
-                    <img class="icon-img" src="assets/icons/modrinth.svg"></img>
-                    <span class="app-label">chiyoko.jar</span>
-                </div>
-    
-                <div class="app-icon" id="opentolanfix">
-                    <img class="icon-img" src="assets/icons/modrinth.svg"></img>
-                    <span class="app-label">open-to-lan-fix.jar</span>
-                </div>
-            </div>
-            `,
+            locale.apps.mods,
+            `<div class="folder__grid">
+                ${folderItem("chiyoko", imgIcon("assets/icons/modrinth.svg"), plainLabel("chiyoko.jar"))}
+                ${folderItem("opentolanfix", imgIcon("assets/icons/modrinth.svg"), plainLabel("open-to-lan-fix.jar"))}
+            </div>`,
+            "apps.mods",
         );
+        if (!this.el) return;
 
         const el = this.el;
         el.querySelector("#chiyoko").addEventListener(
@@ -235,242 +187,145 @@ export class ModsWindow extends Window {
 
 export class FriendsWindow extends Window {
     constructor(locale) {
+        const friends = [
+            ["abril", "abi", "https://tilde.town/~abril/"],
+            ["crystalsrl", "crystal", "https://crystalsrl.carrd.co/"],
+            ["cylscooler", "cyl"],
+            ["eira", "eira", "https://en.pronouns.page/@eirasv"],
+            ["fanda", "fanda", "https://seedcrack.com/"],
+            ["lunar", "lunar", "https://en.pronouns.page/@sleepyylunar"],
+            ["m8use", "m8use", "https://m8use.com"],
+            ["meox", "meox", "https://meox.moe/user/meox/about/meox_.html"],
+            ["showme7", "showme7"],
+        ];
+
         super(
             "folder friends",
-            `${locale.apps.friends}`,
-            `
-            <div class="folder-items">
-                <div class="app-icon" id="Abril">
-                    <img class="icon-img" src="assets/people/abril.webp"></img>
-                    <span class="app-label">abi</span>
-                </div>
-                <div class="app-icon" id="CrystalSRL">
-                    <img class="icon-img" src="assets/people/crystalsrl.jpg"></img>
-                    <span class="app-label">crystal</span>
-                </div>
-                <div class="app-icon" id="cylscooler">
-                    <img class="icon-img" src="assets/people/cylscooler.png"></img>
-                    <span class="app-label">cyl</span>
-                </div>
-                <div class="app-icon" id="eira">
-                    <img class="icon-img" src="assets/people/eira.png"></img>
-                    <span class="app-label">eira</span>
-                </div>   
-                <div class="app-icon" id="fanda857">
-                    <img class="icon-img" src="assets/people/fanda.jpg"></img>
-                    <span class="app-label">fanda</span>
-                </div>   
-                <div class="app-icon" id="lunar">
-                    <img class="icon-img" src="assets/people/lunar.jpg"></img>
-                    <span class="app-label">lunar</span>
-                </div>
-                <div class="app-icon" id="M8use">
-                    <img class="icon-img" src="assets/people/m8use.png"></img>
-                    <span class="app-label">m8use</span>
-                </div>
-                <div class="app-icon" id="Meox_">
-                    <img class="icon-img" src="assets/people/meox.webp"></img>
-                    <span class="app-label">meox</span>
-                </div>
-                <div class="app-icon" id="showme7">
-                    <img class="icon-img" src="assets/people/showme7.png"></img>
-                    <span class="app-label">showme7</span>
-                </div>
+            locale.apps.friends,
+            `<div class="folder__grid">
+                ${friends
+                    .map(([id, label]) => folderItem(id, imgIcon(`assets/people/${id}.webp`), plainLabel(label)))
+                    .join("")}
+            </div>`,
+            "apps.friends",
+        );
+        if (!this.el) return;
 
-            </div>
-        `,
-        );
-        const el = this.el;
-        el.querySelector("#Abril").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://tilde.town/~abril/", "friends"),
-        );
-        el.querySelector("#CrystalSRL").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://crystalsrl.carrd.co/", "friends"),
-        );
-        el.querySelector("#eira").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://en.pronouns.page/@eirasv", "friends"),
-        );
-        el.querySelector("#fanda857").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://seedcrack.com/", "friends"),
-        );
-        el.querySelector("#lunar").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://en.pronouns.page/@sleepyylunar", "friends"),
-        );
-        el.querySelector("#M8use").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://m8use.com", "friends"),
-        );
-        el.querySelector("#Meox_").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://meox.moe/user/meox/about/meox_.html", "friends"),
-        );
-
-        el.querySelector("#cylscooler").addEventListener("click", (e) => {
-            e.stopPropagation();
-            new CylscoolerWindow(locale);
-        });
-        el.querySelector("#showme7").addEventListener("click", (e) => {
-            e.stopPropagation();
-            new ShowMe7Window(locale);
-        });
+        for (const [id, , url] of friends) {
+            if (url) {
+                this.el
+                    .querySelector(`#${id}`)
+                    .addEventListener("click", () => new PopupWindow(locale, "link", url, "friends"));
+            }
+        }
+        this.el.querySelector("#cylscooler").addEventListener("click", () => new CylscoolerWindow(locale));
+        this.el.querySelector("#showme7").addEventListener("click", () => new ShowMe7Window(locale));
     }
 }
 
 export class CylscoolerWindow extends Window {
     constructor(locale) {
-        super(
-            "cylscooler",
-            `cylscooler`,
-            `
-                
-                <iframe src="abouts/cylscooler.html" style="width: 100%; height: 100%; zoom: 0.7; border: none;" id="cylscooler-iframe"></iframe>
-
-            `,
-        );
+        super("cylscooler", "cylscooler", iframe("abouts/cylscooler.html", "cylscooler"));
     }
 }
 export class ShowMe7Window extends Window {
     constructor(locale) {
-        super(
-            "showme7",
-            `showme7`,
-            `
-                
-                <iframe src="abouts/showme7.html" style="width: 100%; height: 100%; zoom: 0.7; border: none;" id="showme7-iframe"></iframe>
-
-            `,
-        );
+        super("showme7", "showme7", iframe("abouts/showme7.html", "showme7"));
     }
 }
 
 export class SpeedrunsWindow extends Window {
     constructor(locale) {
-        let isDark = localStorage.getItem("mainDarkMode") == "true" ? "" : "-dark";
+        const games = [
+            ["Superliminal", [["Any% Glitchless", "24:24.7"]]],
+            ["Minecraft: Java", [["Ranked - Village", "19:53.361"]]],
+            [
+                "Minecraft: Bedrock",
+                [
+                    ["1.16 SSG", "6:46"],
+                    ["1.18+ SSG", "3:12"],
+                ],
+            ],
+        ];
 
         super(
             "speedruns",
             `${locale.apps.speedruns} pbs`,
-            `
-                <div class="game-container">
-                    <h1 class="game-title">Superliminal</h1>
-                    <div class="pb-container">
-                        <p class="pb"><span class="category">Any% Glitchless</span><span class="time">24:24.7</span></p>
-                    </div>
-                </div>
-                <div class="game-container">
-                    <h1 class="game-title">Minecraft: Java</h1>
-                    <div class="pb-container">
-                        <p class="pb"><span class="category">Ranked - Village</span><span class="time">19:53.361</span></p>
-                    </div>
-                </div>
-                <div class="game-container">
-                    <h1 class="game-title">Minecraft: Bedrock</h1>
-                    <div class="pb-container">
-                        <p class="pb"><span class="category">1.16 SSG -</span><span class="time">6:46</span></p>
-                    </div>
-                    <div class="pb-container">
-                        <p class="pb"><span class="category">1.18+ SSG -</span><span class="time">3:12</span></p>
-                    </div>
-                </div>
-            `,
+            `<div class="speedruns">
+                ${games
+                    .map(
+                        ([game, runs]) => `
+                    <section class="speedruns__game">
+                        <h2 class="speedruns__title">${game}</h2>
+                        ${runs
+                            .map(
+                                ([category, time]) =>
+                                    `<p class="pb"><span class="pb__category">${category}</span><span class="pb__time">${time}</span></p>`,
+                            )
+                            .join("")}
+                    </section>`,
+                    )
+                    .join("")}
+            </div>`,
         );
     }
 }
 
 export class Connect4Window extends Window {
     constructor(locale) {
-        super(
-            "connect4",
-            `${locale.apps.connect4} :o`,
-            `
-            
-            <iframe src="connect4" style="width: 100%; height: 100%; zoom: 0.7; border: none;" id="connect4-iframe"></iframe>
-
-            `,
-        );
+        super("connect4", `${locale.apps.connect4} :o`, iframe("connect4", "connect4"));
     }
 }
 
 export class MazeGameWindow extends Window {
     constructor(locale) {
-        super(
-            "maze",
-            `${locale.apps.maze} c:`,
-            `
-            
-            <iframe src="maze" style="width: 100%; height: 100%; zoom: 0.7; border: none;" id="maze-iframe"></iframe>
-
-            `,
-        );
+        super("maze", `${locale.apps.maze} c:`, iframe("maze", "maze"));
     }
 }
 
 export class ClockWindow extends Window {
     constructor(locale) {
-        super(
-            "clock",
-            `${locale.apps.clock}?!`,
-            `
-            
-            <iframe src="clocks-clock" style="width: 100%; height: 100%; zoom: 0.7; border: none;" id="clock-iframe"></iframe>
-
-            `,
-        );
+        super("clock", `${locale.apps.clock}?!`, iframe("clocks-clock", "clock"));
     }
 }
 
 export class TomokoWindow extends Window {
     constructor(locale) {
-        let windowZoom = 0.8;
-        super(
-            "tomoko",
-            `tomoko :3`,
-            `
-            <div style="width: 100%; height: 100%; overflow: hidden;">
-                <iframe src="tomoko" style="width: calc(100% / ${windowZoom}); height: calc(100% / ${windowZoom}); transform: scale(${windowZoom}); transform-origin: 0 0; border: none;" id="tomoko-iframe"></iframe>
-            </div>
-            `,
-        );
+        super("tomoko", "tomoko :3", iframe("tomoko", "tomoko", 0.8));
     }
 }
+
 export class SettingsWindow extends Window {
     constructor(locale) {
-        let checked = localStorage.getItem("mainDarkMode") == "true" ? "checked" : "";
+        const checked = localStorage.getItem("mainDarkMode") == "true" ? "checked" : "";
+        const lang = document.documentElement.lang;
+
         super(
             "settings",
-            `${locale.settings.title}`,
-            `
-            
-            <div class="switch-container">
-                <span class="switch-label" data-i18n="settings.theme">${locale.settings.theme}</span>
-                <label class="switch" for="theme-switch">
-                    <input id="theme-switch" type="checkbox" ${checked}>
-                    <span class="slider round"></span>
+            locale.settings.title,
+            `<div class="setting-row">
+                <label class="setting-row__label" for="theme-switch" data-i18n="settings.theme">${locale.settings.theme}</label>
+                <label class="switch">
+                    <input class="switch__input" id="theme-switch" type="checkbox" ${checked} />
+                    <span class="switch__slider"></span>
                 </label>
-            </div>  
-            <div class="lang-selector-container">
-                <span class="language-selector-label" for="language-picker-select" data-i18n="settings.language">${locale.settings.language}</span>
-                <form action="language-selector">
-                    <select name="language-picker-select" id="language-picker-select">
-                        <option lang="de" value="de" ${document.documentElement.lang == "de" ? "selected" : ""}>${getFromLocale("de", "settings.languageName")}</option>
-                        <option lang="en" value="en" ${document.documentElement.lang == "en" ? "selected" : ""}>${getFromLocale("en", "settings.languageName")}</option>
-                        <option lang="es" value="es" ${document.documentElement.lang == "es" ? "selected" : ""}>${getFromLocale("es", "settings.languageName")}</option>
-                        <option lang="fr" value="fr" ${document.documentElement.lang == "fr" ? "selected" : ""}>${getFromLocale("fr", "settings.languageName")}</option>
-                        <option lang="nl" value="nl" ${document.documentElement.lang == "nl" ? "selected" : ""}>${getFromLocale("nl", "settings.languageName")}</option>
-                    </select>
-                </form>
             </div>
-
-            `,
+            <div class="setting-row">
+                <label class="setting-row__label" for="language-select" data-i18n="settings.language">${locale.settings.language}</label>
+                <select class="language-select" id="language-select">
+                    ${["de", "en", "es", "fr", "nl"]
+                        .map(
+                            (code) =>
+                                `<option lang="${code}" value="${code}" ${lang == code ? "selected" : ""}>${getFromLocale(code, "settings.languageName")}</option>`,
+                        )
+                        .join("")}
+                </select>
+            </div>`,
+            "settings.title",
         );
-        document.getElementById("theme-switch").addEventListener("change", toggleTheme);
-        document.getElementById("language-picker-select").addEventListener("change", (e) => {
-            loadLang(e.target.value);
-        });
+        if (!this.el) return;
+
+        this.el.querySelector("#theme-switch").addEventListener("change", toggleTheme);
+        this.el.querySelector("#language-select").addEventListener("change", (e) => loadLang(e.target.value));
     }
 }

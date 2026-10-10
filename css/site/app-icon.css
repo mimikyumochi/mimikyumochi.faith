@@ -1,0 +1,107 @@
+.app-icon {
+    position: relative;
+    display: grid;
+    /* fixed track so wide glyphs like the folder overflow evenly instead of growing it */
+    grid-template-columns: 100%;
+    place-items: center;
+    aspect-ratio: 1;
+    width: 3rem;
+    padding: 0;
+
+    font-size: 1.5rem;
+    color: white;
+    background: none;
+    border: 3px solid currentColor;
+    border-radius: var(--radius-sm);
+
+    cursor: pointer;
+
+    &:focus-visible {
+        outline: 2px solid rgb(var(--accent-pink));
+        outline-offset: 2px;
+    }
+}
+
+.app-icon__img {
+    width: 75%;
+}
+
+.app-icon__label {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.app-icon--folder {
+    border: none;
+    font-size: 3rem;
+    color: pink;
+
+    /* the folder glyph has empty space below it, so the label sits closer */
+    .app-icon__label {
+        top: 100%;
+        color: white;
+    }
+}
+
+.app-icon--large {
+    width: 5rem;
+    margin: 1rem;
+    font-size: 2rem;
+    color: rgb(var(--text2));
+
+    .app-icon__label {
+        width: 20ch;
+        text-wrap: wrap;
+    }
+
+    @media (width < 768px) {
+        width: 7vh;
+        margin: 2rem;
+        font-size: 1.5rem;
+    }
+}
+
+.taskbar__item {
+    width: 1.7rem;
+
+    font-size: 1.1rem;
+    border-width: 2px;
+
+    transition: none;
+
+    &:hover {
+        background: rgb(var(--accent-pink) / 50%);
+    }
+
+    &.is-focused {
+        background: rgb(var(--accent-pink) / 70%);
+    }
+}
+
+.app-icon--connect4 {
+    @media (width < 768px) {
+        font-size: 1.3rem;
+    }
+
+    &.taskbar__item {
+        font-size: 0.6rem;
+        filter: grayscale(100%);
+    }
+}
+
+.app-icon__disc {
+    grid-area: 1 / 1;
+}
+.app-icon__disc--red {
+    color: rgb(var(--c4-red));
+    translate: 0 -50%;
+}
+.app-icon__disc--yellow {
+    color: rgb(var(--c4-yellow));
+    translate: 0 50%;
+}

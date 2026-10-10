@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+}
+body {
+    font-family: var(--font);
+}
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+/* display rules like grid would otherwise override the hidden attribute */
+[hidden] {
+    display: none !important;
+}
+
+a:link,
+a:visited {
+    color: var(--link, var(--accent));
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+}

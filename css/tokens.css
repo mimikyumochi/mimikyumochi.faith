@@ -1,0 +1,53 @@
+:root {
+    --font: "Quicksand", sans-serif;
+    --accent: #aa7bff;
+    --link: var(--accent);
+    --page-bg: #1c1c1c; /* subpages */
+
+    --radius-sm: 5px;
+    --radius-md: 10px;
+    --radius-pill: 999px;
+
+    --z-window: 100;
+    --z-popup: 1000;
+    --z-resizer: 10;
+
+    --confirm: 180 255 180;
+    --cancel: 255 139 139;
+    --switch-off: 220 224 232;
+
+    --c4-red: 255 93 93;
+    --c4-yellow: 255 255 158;
+
+    /* trans flag, reused by 404 */
+    --trans-flag: #5bcefa 20%, #f5a9b8 20% 40%, #fff 40% 60%, #f5a9b8 60% 80%, #5bcefa 80%;
+}
+
+[data-theme="light"] {
+    color-scheme: light;
+    --bg1: 239 241 245;
+    --bg2: 230 233 239;
+    --bg3: 220 224 232;
+    --text1: 76 79 105;
+    --text2: 92 95 119;
+    --text3: 108 111 133;
+    --accent-pink: 234 118 203;
+    --accent-green: 64 160 43;
+    --red: 210 15 57;
+    --wallpaper-dim: 0.1;
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+    --bg1: 36 39 58;
+    --bg2: 30 32 48;
+    --bg3: 24 25 38;
+    --text1: 202 211 245;
+    --text2: 184 192 224;
+    --text3: 165 173 203;
+
+    --accent-pink: 245 189 230;
+    --accent-green: 166 218 149;
+    --red: 237 135 150;
+    --wallpaper-dim: 0.25;
+}

@@ -1,0 +1,61 @@
+.panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 2.5rem;
+    padding-inline: 1rem;
+
+    color: rgb(var(--text1));
+    background: rgb(var(--bg3) / 0.6);
+
+    @media (width < 768px) {
+        height: 5vh;
+        padding-inline: 0.5rem;
+        font-size: 2.5vh;
+    }
+}
+
+.panel__group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.panel__settings {
+    padding: 0;
+
+    font-size: 1.5rem;
+    color: inherit;
+    background: none;
+    border: none;
+
+    cursor: pointer;
+}
+
+.clock {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.heart-rate {
+    width: 7rem;
+    height: 2.4rem;
+
+    border: none;
+    filter: brightness(0%) invert(15%);
+    /* a dark color-scheme would give the widget an opaque background */
+    color-scheme: light;
+
+    [data-theme="dark"] & {
+        filter: brightness(0%) invert(85%);
+    }
+}
+
+.taskbar {
+    display: flex;
+    gap: 0.5rem;
+
+    @media (width < 768px) {
+        display: none;
+    }
+}

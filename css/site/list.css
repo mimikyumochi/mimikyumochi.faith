@@ -1,0 +1,35 @@
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    gap: 1rem;
+    min-height: 100%;
+    margin: 0;
+    padding: 1rem;
+
+    list-style: none;
+}
+
+.card {
+    width: 43%;
+    padding: 1rem;
+
+    text-align: center;
+    background: rgb(var(--bg3));
+    border-radius: var(--radius-sm);
+
+    > i {
+        color: var(--icon-colour, inherit);
+    }
+
+    a {
+        font-weight: bold;
+    }
+
+    @media (width < 768px) {
+        align-content: center;
+        width: 35%;
+        min-height: 5rem;
+    }
+}

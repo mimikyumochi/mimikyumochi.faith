@@ -99,14 +99,9 @@ document.addEventListener("keydown", function (event) {
 
 addActiveWindowWidgetListeners();
 
-preloadLocales();
 loadTheme();
 updateClock();
+setInterval(updateClock, 1000);
 
-setTimeout(() => {
-    loadLang(localStorage.getItem("lang") ? localStorage.getItem("lang") : "en");
-}, 500);
-
-setInterval(() => {
-    updateClock();
-}, 1000);
+await preloadLocales();
+loadLang(localStorage.getItem("lang") ?? "en");

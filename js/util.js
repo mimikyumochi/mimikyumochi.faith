@@ -1,28 +1,6 @@
-import { windowOrder, updateWindowOrder } from "./windowBase.js";
+import { focusApp } from "./windowBase.js";
 
-export function closeTopWindow() {
-    let type = windowOrder[0];
-
-    const el = document.getElementsByClassName(`${type}-window`)[0];
-    if (!el) return;
-
-    const isReduced =
-        window.matchMedia(`(prefers-reduced-motion: reduce)`) === true ||
-        window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
-    if (!!isReduced) {
-        el.remove();
-    } else {
-        el.classList.remove("open");
-        el.addEventListener("transitionend", () => el.remove());
-    }
-
-    windowOrder.shift();
-    try {
-        document.querySelector(`#active-windows-${type}`).classList.toggle("hidden");
-    } catch (error) {
-        console.log(`${type} does not have an active window icon`);
-    }
-}
+export { closeTopWindow } from "./windowBase.js";
 
 export function updateClock() {
     const date = new Date();
@@ -30,44 +8,25 @@ export function updateClock() {
     const minutes = String(date.getMinutes()).padStart(2, "0");
     const seconds = String(date.getSeconds()).padStart(2, "0");
 
-    document.getElementById("clock").innerHTML = `${hours}:${minutes}:${seconds}`;
+    document.getElementById("clock").textContent = `${hours}:${minutes}:${seconds}`;
 }
 
 export function addActiveWindowWidgetListeners() {
-    const icons = document.querySelectorAll("#active-windows .app-icon");
-
-    icons.forEach((icon) => {
-        icon.addEventListener("click", function () {
-            const type = icon.id.split("-").pop();
-
-            updateWindowOrder(type);
-        });
-    });
-}
-export function toggleTheme() {
-    var darkMode = localStorage.getItem("mainDarkMode");
-    if (darkMode == "true") {
-        document.documentElement.classList.remove("dark");
-        document.documentElement.classList.add("light");
-    } else {
-        document.documentElement.classList.add("dark");
-        document.documentElement.classList.remove("light");
+    for (const icon of document.querySelectorAll("#taskbar [data-app]")) {
+        icon.addEventListener("click", () => focusApp(icon.dataset.app));
     }
+}
 
-    localStorage.setItem("mainDarkMode", darkMode == "false" ? "true" : false);
+// mainDarkMode "true" means dark
+export function toggleTheme() {
+    const dark = localStorage.getItem("mainDarkMode") != "true";
+    localStorage.setItem("mainDarkMode", String(dark));
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
 }
 
 export function loadTheme() {
-    var darkMode = localStorage.getItem("mainDarkMode");
-
-    if (darkMode == null) {
-        localStorage.setItem("mainDarkMode", "false");
-        document.documentElement.classList.add("light");
-    } else if (darkMode == "false") {
-        document.documentElement.classList.add("light");
-    } else {
-        document.documentElement.classList.add("dark");
-    }
+    const dark = localStorage.getItem("mainDarkMode") == "true";
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
 }
 
 const locales = {};
@@ -125,11 +84,8 @@ export function loadLang(langCode) {
         }
 
         if (value !== null) {
-            if (keyPath[0] == "about") {
-                value = `<i class="fa-regular fa-heart" style="color:lightskyblue"></i> ` + value;
-            }
-            if (keyPath[0] == "likes") {
-                value = `<i class="fa-regular fa-heart" style="color:pink"></i> ` + value;
+            if (el.classList.contains("card")) {
+                value = `<i class="fa-regular fa-heart" aria-hidden="true"></i> ` + value;
             }
             if (el.dataset.app == "py") {
                 value = value + "." + locale.misc.py;

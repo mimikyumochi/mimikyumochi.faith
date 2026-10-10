@@ -9,74 +9,124 @@
         <meta name="theme-color" content="#aa7bff" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <!-- global css -->
-        <link rel="stylesheet" href="css/common.css" />
+        <!-- set before css loads so the theme doesn't flash, "true" means dark -->
+        <script>
+            document.documentElement.dataset.theme = localStorage.getItem("mainDarkMode") == "true" ? "dark" : "light";
+        </script>
 
-        <!-- platform based css -->
-        <link rel="stylesheet" href="css/desktop.css" media="screen and (min-width: 768px)" />
-        <link rel="stylesheet" href="css/mobile.css" media="screen and (max-width: 767px)" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" />
+        <link rel="stylesheet" href="css/tokens.css" />
+        <link rel="stylesheet" href="css/base.css" />
+        <link rel="stylesheet" href="css/site/desktop.css" />
+        <link rel="stylesheet" href="css/site/panel.css" />
+        <link rel="stylesheet" href="css/site/app-icon.css" />
+        <link rel="stylesheet" href="css/site/window.css" />
+        <link rel="stylesheet" href="css/site/list.css" />
+        <link rel="stylesheet" href="css/site/folder.css" />
+        <link rel="stylesheet" href="css/site/popup.css" />
+        <link rel="stylesheet" href="css/site/settings.css" />
+        <link rel="stylesheet" href="css/site/speedruns.css" />
 
         <script src="https://kit.fontawesome.com/144e8a950b.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
-        <div class="panel">
-            <div class="right widget-container">
-                <div class="widget" id="clock"></div>
-                <div class="widget" id="active-windows">
-                    <div class="app-icon hidden" id="active-windows-about"><i class="fa-regular fa-id-card"></i></div>
-                    <div class="app-icon hidden" id="active-windows-likes"><i class="fa-regular fa-heart"></i></div>
-                    <div class="app-icon hidden" id="active-windows-specs"><i class="fa-solid fa-computer"></i></div>
-                    <div class="app-icon hidden" id="active-windows-projects"><i class="fa-solid fa-folder"></i></div>
-                    <div class="app-icon hidden" id="active-windows-socials"><i class="fa-solid fa-folder"></i></div>
-                    <div class="app-icon hidden" id="active-windows-mods"><i class="fa-solid fa-folder"></i></div>
-                    <div class="app-icon hidden" id="active-windows-friends"><i class="fa-solid fa-folder"></i></div>
-                    <div class="app-icon hidden" id="active-windows-speedruns"><i class="fa-solid fa-medal"></i></div>
-                    <div class="app-icon hidden" id="active-windows-settings"><i class="fa-solid fa-gear"></i></div>
-                    <div class="app-icon hidden" id="active-windows-connect4">
-                        <i class="fa-solid fa-circle" id="red" style="color: rgb(255, 93, 93)"></i
-                        ><i class="fa-solid fa-circle" id="yellow" style="color: rgb(255, 255, 158)"></i>
-                    </div>
-                    <div class="app-icon hidden" id="active-windows-maze"><i class="fa-solid fa-signs-post"></i></div>
-                    <div class="app-icon hidden" id="active-windows-tomoko"><i class="fa-solid fa-brain"></i></div>
-                </div>
+        <header class="panel">
+            <div class="panel__group">
+                <time class="clock" id="clock"></time>
+                <nav class="taskbar" id="taskbar" aria-label="open windows">
+                    <button class="app-icon taskbar__item" data-app="about" aria-label="about" hidden>
+                        <i class="fa-regular fa-id-card" aria-hidden="true"></i>
+                    </button>
+                    <button class="app-icon taskbar__item" data-app="likes" aria-label="likes" hidden>
+                        <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                    </button>
+                    <button class="app-icon taskbar__item" data-app="specs" aria-label="specs" hidden>
+                        <i class="fa-solid fa-computer" aria-hidden="true"></i>
+                    </button>
+                    <button class="app-icon taskbar__item" data-app="projects" aria-label="projects" hidden>
+                        <i class="fa-solid fa-folder" aria-hidden="true"></i>
+                    </button>
+                    <button class="app-icon taskbar__item" data-app="socials" aria-label="socials" hidden>
+                        <i class="fa-solid fa-folder" aria-hidden="true"></i>
+                    </button>
+                    <button class="app-icon taskbar__item" data-app="mods" aria-label="mods" hidden>
+                        <i class="fa-solid fa-folder" aria-hidden="true"></i>
+                    </button>
+                    <button class="app-icon taskbar__item" data-app="friends" aria-label="friends" hidden>
+                        <i class="fa-solid fa-folder" aria-hidden="true"></i>
+                    </button>
+                    <button class="app-icon taskbar__item" data-app="speedruns" aria-label="speedruns" hidden>
+                        <i class="fa-solid fa-medal" aria-hidden="true"></i>
+                    </button>
+                    <button class="app-icon taskbar__item" data-app="settings" aria-label="settings" hidden>
+                        <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                    </button>
+                    <button
+                        class="app-icon taskbar__item app-icon--connect4"
+                        data-app="connect4"
+                        aria-label="connect4"
+                        hidden
+                    >
+                        <i class="fa-solid fa-circle app-icon__disc app-icon__disc--red" aria-hidden="true"></i>
+                        <i class="fa-solid fa-circle app-icon__disc app-icon__disc--yellow" aria-hidden="true"></i>
+                    </button>
+                    <button class="app-icon taskbar__item" data-app="maze" aria-label="maze" hidden>
+                        <i class="fa-solid fa-signs-post" aria-hidden="true"></i>
+                    </button>
+                    <button class="app-icon taskbar__item" data-app="clock" aria-label="clock" hidden>
+                        <i class="fa-solid fa-clock" aria-hidden="true"></i>
+                    </button>
+                    <button class="app-icon taskbar__item" data-app="tomoko" aria-label="tomoko" hidden>
+                        <i class="fa-solid fa-brain" aria-hidden="true"></i>
+                    </button>
+                </nav>
             </div>
-            <div class="left widget-container">
-                <div class="widget" id="heartrate">
-                    <iframe
-                        src="https://pulsoid.net/widget/view/1c041bdd-ef2f-4527-8761-571c8a67afc8"
-                        style="color: white"
-                    ></iframe>
-                </div>
-                <div class="widget" id="settings"><i class="fa-solid fa-gear"></i></div>
+            <div class="panel__group">
+                <iframe
+                    class="heart-rate"
+                    title="heart rate"
+                    src="https://pulsoid.net/widget/view/1c041bdd-ef2f-4527-8761-571c8a67afc8"
+                ></iframe>
+                <button class="panel__settings" id="settings" aria-label="settings">
+                    <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                </button>
             </div>
-        </div>
-        <div class="desktop">
+        </header>
+        <main class="desktop">
             <button class="app-icon" id="about">
-                <i class="fa-regular fa-id-card"></i><span class="app-label" data-i18n="apps.about"></span>
+                <i class="fa-regular fa-id-card" aria-hidden="true"></i
+                ><span class="app-icon__label" data-i18n="apps.about"></span>
             </button>
             <button class="app-icon" id="likes">
-                <i class="fa-regular fa-heart"></i><span class="app-label" data-i18n="apps.likes"></span>
+                <i class="fa-regular fa-heart" aria-hidden="true"></i
+                ><span class="app-icon__label" data-i18n="apps.likes"></span>
             </button>
             <button class="app-icon" id="specs">
-                <i class="fa-solid fa-computer"></i><span class="app-label" data-i18n="apps.specs"></span>
+                <i class="fa-solid fa-computer" aria-hidden="true"></i
+                ><span class="app-icon__label" data-i18n="apps.specs"></span>
             </button>
             <button class="app-icon" id="speedruns">
-                <i class="fa-solid fa-medal"></i><span class="app-label" data-i18n="apps.speedruns"></span>
+                <i class="fa-solid fa-medal" aria-hidden="true"></i
+                ><span class="app-icon__label" data-i18n="apps.speedruns"></span>
             </button>
-            <button class="app-icon folder" id="projects">
-                <i class="fa-solid fa-folder"></i><span class="app-label" data-i18n="apps.projects"></span>
+            <button class="app-icon app-icon--folder" id="projects">
+                <i class="fa-solid fa-folder" aria-hidden="true"></i
+                ><span class="app-icon__label" data-i18n="apps.projects"></span>
             </button>
-            <button class="app-icon folder" id="socials">
-                <i class="fa-solid fa-folder"></i><span class="app-label" data-i18n="apps.socials"></span>
+            <button class="app-icon app-icon--folder" id="socials">
+                <i class="fa-solid fa-folder" aria-hidden="true"></i
+                ><span class="app-icon__label" data-i18n="apps.socials"></span>
             </button>
-            <button class="app-icon folder" id="mods">
-                <i class="fa-solid fa-folder"></i><span class="app-label" data-i18n="apps.mods"></span>
+            <button class="app-icon app-icon--folder" id="mods">
+                <i class="fa-solid fa-folder" aria-hidden="true"></i
+                ><span class="app-icon__label" data-i18n="apps.mods"></span>
             </button>
-            <button class="app-icon folder" id="friends">
-                <i class="fa-solid fa-folder"></i><span class="app-label" data-i18n="apps.friends"></span>
+            <button class="app-icon app-icon--folder" id="friends">
+                <i class="fa-solid fa-folder" aria-hidden="true"></i
+                ><span class="app-icon__label" data-i18n="apps.friends"></span>
             </button>
-        </div>
+        </main>
 
         <div class="windows"></div>
     </body>

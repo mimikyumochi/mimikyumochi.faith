@@ -1,0 +1,35 @@
+* {
+    scrollbar-width: none;
+    transition:
+        background-color 400ms,
+        color 400ms,
+        border-color 400ms;
+}
+
+body {
+    height: 100%;
+    overflow: hidden;
+
+    background: linear-gradient(rgb(0 0 0 / var(--wallpaper-dim)) 0 0), url(../../assets/wallpapers/bg.webp);
+    background-size: 20%;
+
+    @media (width < 768px) {
+        background-size: 100%;
+    }
+}
+
+.desktop {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 5rem;
+    width: fit-content;
+    height: calc(100vh - 6rem);
+    margin: 2rem;
+
+    @media (width < 768px) {
+        flex-direction: row;
+        width: auto;
+        height: auto;
+        margin: 5vh 0 0 6vh;
+    }
+}

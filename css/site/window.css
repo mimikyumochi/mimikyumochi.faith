@@ -1,0 +1,188 @@
+.windows {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.window {
+    position: absolute;
+    top: 15rem;
+    left: 30rem;
+    display: flex;
+    flex-direction: column;
+    width: 50rem;
+    height: 30rem;
+
+    color: rgb(var(--text1));
+
+    transform: scale(0);
+    transition: transform 300ms;
+    will-change: transform;
+
+    &.is-open {
+        transform: none;
+        backdrop-filter: blur(4px);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
+
+    @media (width < 768px) {
+        top: 5vh;
+        left: 0;
+        width: 100vw;
+        height: 95dvh;
+        overflow: hidden;
+
+        /* bar behind the home button */
+        &::after {
+            content: "";
+            flex: none;
+            height: 6vh;
+            background: rgb(var(--bg2));
+        }
+    }
+}
+
+.window__titlebar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: none;
+    height: 1.625rem;
+    padding: 5px;
+
+    background: rgb(var(--bg2));
+
+    cursor: grab;
+    user-select: none;
+
+    @media (width < 768px) {
+        position: static;
+        height: 2rem;
+    }
+}
+
+.window__title {
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.window__close {
+    position: absolute;
+    right: 0.5rem;
+    display: grid;
+    place-items: center;
+    width: 1rem;
+    height: 1rem;
+    padding: 0;
+
+    font-weight: bold;
+    line-height: 1;
+    color: transparent;
+    background: rgb(var(--red));
+    border: none;
+    border-radius: 50%;
+
+    cursor: pointer;
+    transition: none;
+
+    &:hover {
+        color: rgb(var(--bg1));
+    }
+
+    @media (width < 768px) {
+        inset: auto 0 0.5vh;
+        width: 5vh;
+        height: 5vh;
+        margin-inline: auto;
+
+        font-size: 1.75vh;
+        color: white;
+        background: black;
+    }
+}
+
+.window__content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+
+    background: rgb(var(--bg1) / 0.75);
+    border: 3px solid rgb(var(--bg2));
+
+    @media (width < 768px) {
+        background: rgb(var(--bg2) / 0.9);
+        -webkit-backdrop-filter: blur(3px);
+        backdrop-filter: blur(3px);
+    }
+}
+
+.resizer {
+    position: absolute;
+    z-index: var(--z-resizer);
+}
+.resizer[data-dir*="n"] {
+    top: -4px;
+    height: 8px;
+}
+.resizer[data-dir*="s"] {
+    bottom: -4px;
+    height: 8px;
+}
+.resizer[data-dir*="e"] {
+    right: -4px;
+    width: 8px;
+}
+.resizer[data-dir*="w"] {
+    left: -4px;
+    width: 8px;
+}
+.resizer[data-dir="n"],
+.resizer[data-dir="s"] {
+    inset-inline: 0;
+    cursor: ns-resize;
+}
+.resizer[data-dir="e"],
+.resizer[data-dir="w"] {
+    inset-block: 0;
+    cursor: ew-resize;
+}
+.resizer[data-dir="ne"],
+.resizer[data-dir="nw"],
+.resizer[data-dir="se"],
+.resizer[data-dir="sw"] {
+    width: 12px;
+    height: 12px;
+}
+.resizer[data-dir="ne"],
+.resizer[data-dir="sw"] {
+    cursor: nesw-resize;
+}
+.resizer[data-dir="nw"],
+.resizer[data-dir="se"] {
+    cursor: nwse-resize;
+}
+
+/* same scaling in every browser, firefox only got `zoom` in 126 */
+.iframe-frame {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    iframe {
+        width: calc(100% / var(--zoom));
+        height: calc(100% / var(--zoom));
+
+        border: none;
+
+        transform: scale(var(--zoom));
+        transform-origin: 0 0;
+    }
+}
+
+.is-dragging iframe {
+    pointer-events: none;
+}
