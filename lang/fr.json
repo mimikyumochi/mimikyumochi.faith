@@ -37,6 +37,10 @@
         "languageName": "francais"
     },
 
+    "detail": {
+        "error": "impossible de charger pour le moment"
+    },
+
     "apps": {
         "likes": "gouts",
         "socials": "reseaux",

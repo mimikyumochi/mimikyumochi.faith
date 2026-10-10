@@ -1,6 +1,7 @@
 import { Window } from "./windowBase.js";
 import { PopupWindow } from "./popupWindow.js";
 import { getFromLocale, toggleTheme, loadLang } from "./util.js";
+import { GithubProfileWindow, RepoWindow, ModrinthProfileWindow, ModWindow } from "./detailWindows.js";
 
 const heartCard = (locale, section, key, colour) => `
     <li class="card" style="--icon-colour: ${colour}" data-i18n="${section}.${key}">
@@ -18,9 +19,9 @@ const plainLabel = (text) => `<span class="app-icon__label">${text}</span>`;
 const appLabel = (locale, key, ext) =>
     `<span class="app-icon__label" data-app="${ext}" data-i18n="apps.${key}">${locale.apps[key]}.${locale.misc[ext]}</span>`;
 
-const iframe = (src, title, zoom = 0.7) => `
+const iframe = (src, title, zoom = 0.7, attrs = "", fallback = "") => `
     <div class="iframe-frame" style="--zoom: ${zoom}">
-        <iframe src="${src}" title="${title}"></iframe>
+        <iframe src="${src}" title="${title}" ${attrs}>${fallback}</iframe>
     </div>`;
 
 export class AboutWindow extends Window {
@@ -104,24 +105,9 @@ export class ProjectsWindow extends Window {
         const el = this.el;
         el.querySelector("#connect4").addEventListener("click", () => new Connect4Window(locale));
         el.querySelector("#maze-game").addEventListener("click", () => new MazeGameWindow(locale));
-        el.querySelector("#faithbot").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "file", "https://github.com/mimikyumochi/FaithBot", "folder projects"),
-        );
-        el.querySelector("#mazegen").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "file", "https://github.com/mimikyumochi/hunt-and-kill", "folder projects"),
-        );
-        el.querySelector("#website").addEventListener(
-            "click",
-            () =>
-                new PopupWindow(
-                    locale,
-                    "file",
-                    "https://github.com/mimikyumochi/mimikyumochi.github.io",
-                    "folder projects",
-                ),
-        );
+        el.querySelector("#faithbot").addEventListener("click", () => new RepoWindow("FaithBot"));
+        el.querySelector("#mazegen").addEventListener("click", () => new RepoWindow("hunt-and-kill"));
+        el.querySelector("#website").addEventListener("click", () => new RepoWindow("mimikyumochi.faith"));
         el.querySelector("#clock").addEventListener("click", () => new ClockWindow(locale));
         el.querySelector("#tomoko").addEventListener("click", () => new TomokoWindow(locale));
     }
@@ -146,18 +132,18 @@ export class SocialsWindow extends Window {
         if (!this.el) return;
 
         const links = {
-            github: "https://github.com/mimikyumochi",
             youtube: "https://youtube.com/@mimikyumochii",
             instagram: "https://instagram.com/mimikyumochi",
-            "pronouns-page": "https://pronouns.page/@mimikyumochi",
             twitter: "https://twitter.com/mimikyumochii",
-            modrinth: "https://modrinth.com/user/mimikyumochi",
         };
         for (const [id, url] of Object.entries(links)) {
             this.el
                 .querySelector(`#${id}`)
                 .addEventListener("click", () => new PopupWindow(locale, "link", url, "socials"));
         }
+        this.el.querySelector("#pronouns-page").addEventListener("click", () => new PronounsWindow(locale));
+        this.el.querySelector("#github").addEventListener("click", () => new GithubProfileWindow());
+        this.el.querySelector("#modrinth").addEventListener("click", () => new ModrinthProfileWindow());
     }
 }
 export class ModsWindow extends Window {
@@ -166,71 +152,82 @@ export class ModsWindow extends Window {
             "folder mods",
             locale.apps.mods,
             `<div class="folder__grid">
-                ${folderItem("chiyoko", imgIcon("assets/icons/modrinth.svg"), plainLabel("chiyoko.jar"))}
+                ${folderItem("chiyoko-loot", imgIcon("assets/icons/modrinth.svg"), plainLabel("chiyoko-loot.jar"))}
                 ${folderItem("opentolanfix", imgIcon("assets/icons/modrinth.svg"), plainLabel("open-to-lan-fix.jar"))}
+                ${folderItem("betterquicksell", imgIcon("assets/icons/modrinth.svg"), plainLabel("betterquicksell.jar"))}
             </div>`,
             "apps.mods",
         );
         if (!this.el) return;
 
         const el = this.el;
-        el.querySelector("#chiyoko").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://modrinth.com/mod/chiyoko", "mods"),
-        );
-        el.querySelector("#opentolanfix").addEventListener(
-            "click",
-            () => new PopupWindow(locale, "link", "https://modrinth.com/mod/open-to-lan-fix", "mods"),
-        );
+        el.querySelector("#chiyoko-loot").addEventListener("click", () => new ModWindow("chiyoko-loot"));
+        el.querySelector("#opentolanfix").addEventListener("click", () => new ModWindow("open-to-lan-fix"));
+        el.querySelector("#betterquicksell").addEventListener("click", () => new ModWindow("betterquicksell"));
     }
 }
 
+// friends with a `page` open in a window, the rest go through the link popup
+const friends = [
+    { id: "abril", label: "abi", page: "https://tilde.town/~abril/" },
+    { id: "crystalsrl", label: "crystal", url: "https://crystalsrl.carrd.co/" },
+    { id: "cylscooler", label: "cyl", title: "cylscooler", page: "abouts/cylscooler.html" },
+    { id: "eira", label: "eira", page: "https://en.pronouns.page/card/@eirasv?embed=true", zoom: 1 },
+    // seedcrack needs SharedArrayBuffer, which only works when it's not in an iframe
+    { id: "fanda", label: "fanda", url: "https://seedcrack.com/" },
+    { id: "lunar", label: "lunar", page: "https://en.pronouns.page/card/@sleepyylunar?embed=true", zoom: 1 },
+    { id: "m8use", label: "m8use", page: "https://m8use.com" },
+    { id: "meox", label: "meox", page: "https://meox.moe/user/meox/about/meox_.html" },
+    { id: "showme7", label: "showme7", page: "abouts/showme7.html" },
+];
+
+// sandboxed without allow-top-navigation so embedded sites can't redirect the whole page
+const externalFrame = (src, title, zoom) =>
+    iframe(
+        src,
+        title,
+        zoom,
+        `loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"`,
+    );
+
 export class FriendsWindow extends Window {
     constructor(locale) {
-        const friends = [
-            ["abril", "abi", "https://tilde.town/~abril/"],
-            ["crystalsrl", "crystal", "https://crystalsrl.carrd.co/"],
-            ["cylscooler", "cyl"],
-            ["eira", "eira", "https://en.pronouns.page/@eirasv"],
-            ["fanda", "fanda", "https://seedcrack.com/"],
-            ["lunar", "lunar", "https://en.pronouns.page/@sleepyylunar"],
-            ["m8use", "m8use", "https://m8use.com"],
-            ["meox", "meox", "https://meox.moe/user/meox/about/meox_.html"],
-            ["showme7", "showme7"],
-        ];
-
         super(
             "folder friends",
             locale.apps.friends,
             `<div class="folder__grid">
                 ${friends
-                    .map(([id, label]) => folderItem(id, imgIcon(`assets/people/${id}.webp`), plainLabel(label)))
+                    .map(({ id, label }) => folderItem(id, imgIcon(`assets/people/${id}.webp`), plainLabel(label)))
                     .join("")}
             </div>`,
             "apps.friends",
         );
         if (!this.el) return;
 
-        for (const [id, , url] of friends) {
-            if (url) {
-                this.el
-                    .querySelector(`#${id}`)
-                    .addEventListener("click", () => new PopupWindow(locale, "link", url, "friends"));
-            }
+        for (const friend of friends) {
+            this.el
+                .querySelector(`#${friend.id}`)
+                .addEventListener("click", () =>
+                    friend.page ? new FriendWindow(friend) : new PopupWindow(locale, "link", friend.url, "friends"),
+                );
         }
-        this.el.querySelector("#cylscooler").addEventListener("click", () => new CylscoolerWindow(locale));
-        this.el.querySelector("#showme7").addEventListener("click", () => new ShowMe7Window(locale));
     }
 }
 
-export class CylscoolerWindow extends Window {
-    constructor(locale) {
-        super("cylscooler", "cylscooler", iframe("abouts/cylscooler.html", "cylscooler"));
+export class FriendWindow extends Window {
+    constructor({ id, label, title = label, page, zoom }) {
+        const content = page.startsWith("https://") ? externalFrame(page, title, zoom) : iframe(page, title, zoom);
+        super(id, title, content);
     }
 }
-export class ShowMe7Window extends Window {
+
+export class PronounsWindow extends Window {
     constructor(locale) {
-        super("showme7", "showme7", iframe("abouts/showme7.html", "showme7"));
+        super(
+            "pronouns",
+            "pronouns.page",
+            externalFrame("https://en.pronouns.page/card/@mimikyumochi?embed=true", "pronouns.page", 1),
+        );
     }
 }
 

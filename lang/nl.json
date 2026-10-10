@@ -33,6 +33,10 @@
         "title": "mijn pc!!",
         "link": "specificaties"
     },
+    "detail": {
+        "error": "kon dit nu niet laden"
+    },
+
     "apps": {
         "likes": "vind-ik-leuks",
         "socials": "socials",

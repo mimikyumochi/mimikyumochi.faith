@@ -1,4 +1,5 @@
 body {
+    margin: 0.5rem;
     background-color: #555;
     display: flex;
     flex-wrap: wrap;
@@ -25,6 +26,8 @@ body {
     width: 2.5vw;
     height: 2.5vw;
     border: 5px solid #333;
+    /* the size above doesn't include the border */
+    box-sizing: content-box;
 
     background: linear-gradient(-45deg, #333, #555);
     border-radius: 50%;

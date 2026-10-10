@@ -37,6 +37,10 @@
         "languageName": "deutsch"
     },
 
+    "detail": {
+        "error": "konnte gerade nicht geladen werden"
+    },
+
     "apps": {
         "likes": "dinge-ich-mag",
         "socials": "soziales",

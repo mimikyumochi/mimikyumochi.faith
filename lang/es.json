@@ -34,6 +34,10 @@
         "link": "specs"
     },
 
+    "detail": {
+        "error": "no se pudo cargar ahora mismo"
+    },
+
     "apps": {
         "likes": "gustos",
         "socials": "sociales",

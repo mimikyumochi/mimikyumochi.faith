@@ -37,6 +37,10 @@
         "languageName": "english"
     },
 
+    "detail": {
+        "error": "couldn't load this right now"
+    },
+
     "apps": {
         "likes": "likes",
         "socials": "socials",
