@@ -1,18 +1,19 @@
-
 body {
     background-size: 20%;
 }
 * {
     scrollbar-width: none;
-    transition: background-color 400ms, color 400ms, border-color 400ms;
+    transition:
+        background-color 400ms,
+        color 400ms,
+        border-color 400ms;
 }
 .panel {
     height: 2.5rem;
     .widget {
         margin: 1rem;
-    };
+    }
 }
-
 
 #active-windows {
     display: flex;
@@ -46,7 +47,8 @@ body {
         line-height: 1.65rem;
         width: 1.65rem;
     }
-    #active-windows-projects, #active-windows-socials {
+    #active-windows-projects,
+    #active-windows-socials {
         border: none;
         font-size: 1.3rem;
         border: 2px solid white;
@@ -61,13 +63,11 @@ body {
     #active-windows-connect4 i#yellow {
         transform: translateY(-75%);
     }
-
 }
 
 #heartrate {
     margin-top: 1.3rem;
 }
-
 
 .desktop {
     gap: 5rem;
@@ -83,12 +83,11 @@ body {
     font-size: 2rem;
 }
 
-
 .app-icon.folder {
     transform: translate(-25%, 0%);
 }
 
-.windows { 
+.windows {
     position: absolute;
     left: 0;
     top: 0;
@@ -100,7 +99,6 @@ body {
     position: absolute;
     left: calc(50% + 30rem);
     top: calc(50% + 15rem);
-
 }
 
 .popup-window {
@@ -118,19 +116,16 @@ body {
     p {
         width: 90%;
         padding: 1ch 0;
-    };
+    }
     button {
         position: relative;
         top: -1rem;
     }
-    
 }
 
 .popup-window .titlebar .close-btn {
     display: none;
 }
-
-
 
 .content {
     height: 100%;
@@ -138,7 +133,7 @@ body {
 }
 
 .content * {
-    margin: 1;    
+    margin: 1;
 }
 .close-btn {
     height: 1rem;
@@ -154,7 +149,7 @@ body {
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        
+
         color: transparent;
         transition-duration: 0ms;
     }
@@ -164,7 +159,6 @@ body {
         color: rgb(var(--bg1));
     }
 }
-
 
 .resizer {
     position: absolute;
@@ -176,7 +170,6 @@ body {
 .resizer.se {
     width: 12px;
     height: 12px;
-
 }
 .resizer.n,
 .resizer.s {
@@ -189,7 +182,7 @@ body {
 .resizer.s,
 .resizer.se,
 .resizer.sw {
-    top: calc(100% + 2rem)
+    top: calc(100% + 2rem);
 }
 
 .resizer.e,
@@ -199,17 +192,43 @@ body {
     top: 0;
     bottom: 0;
 }
-.resizer.n   { top: -4px; cursor: n-resize; }
-.resizer.s   { bottom: -4px; cursor: s-resize; }
-.resizer.e   { right: -4px; cursor: e-resize; }
-.resizer.w   { left: -4px; cursor: w-resize; }
+.resizer.n {
+    top: -4px;
+    cursor: n-resize;
+}
+.resizer.s {
+    bottom: -4px;
+    cursor: s-resize;
+}
+.resizer.e {
+    right: -4px;
+    cursor: e-resize;
+}
+.resizer.w {
+    left: -4px;
+    cursor: w-resize;
+}
 
-.resizer.nw  { top: -6px; left: -6px; cursor: nw-resize; }
-.resizer.ne  { top: -6px; right: -6px; cursor: ne-resize; }
-.resizer.sw  { bottom: -6px; left: -6px; cursor: sw-resize; }
-.resizer.se  { bottom: -6px; right: -6px; cursor: se-resize; }
-
-
+.resizer.nw {
+    top: -6px;
+    left: -6px;
+    cursor: nw-resize;
+}
+.resizer.ne {
+    top: -6px;
+    right: -6px;
+    cursor: ne-resize;
+}
+.resizer.sw {
+    bottom: -6px;
+    left: -6px;
+    cursor: sw-resize;
+}
+.resizer.se {
+    bottom: -6px;
+    right: -6px;
+    cursor: se-resize;
+}
 
 .settings-window {
     width: 300px;

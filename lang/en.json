@@ -6,7 +6,7 @@
         "kotlin": "kotlin enjoyer",
         "hatepeople": "terrified of people",
         "eepy": "constantly eepy",
-        "frontend": "fascinated by cool front-end" 
+        "frontend": "fascinated by cool front-end"
     },
     "likes": {
         "title": "things i like :3",
@@ -17,7 +17,7 @@
         "rlai": "reinforcement learning AI"
     },
 
-    "specs":  {
+    "specs": {
         "title": "my pc!!",
         "link": "specs"
     },
@@ -33,12 +33,12 @@
     "settings": {
         "title": "settings :3",
         "theme": "dark mode",
-        "language": "language", 
+        "language": "language",
         "languageName": "english"
     },
 
     "apps": {
-        "likes": "likes", 
+        "likes": "likes",
         "socials": "socials",
         "speedruns": "speedruns",
         "specs": "pc-specs",
@@ -54,10 +54,9 @@
         "website": "mywebsite",
         "clock": "clock",
         "faithbot": "faithbot"
-
     },
     "misc": {
-        "app": "app", 
+        "app": "app",
         "web": "web",
         "py": "py"
     }

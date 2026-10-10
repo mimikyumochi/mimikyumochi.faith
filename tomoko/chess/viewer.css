@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
 :root {
     --light-square: rgb(255, 225, 180);
     --dark-square: rgb(255 167 113);
@@ -15,7 +15,7 @@
     --text: #fff;
 }
 body {
-    font-family: 'Quicksand', sans-serif;
+    font-family: "Quicksand", sans-serif;
     margin: 0;
     background-color: var(--background);
     color: var(--text);
@@ -110,8 +110,13 @@ a:hover {
     animation: low-time-pulse 1s infinite;
 }
 @keyframes low-time-pulse {
-    0%, 100% { color: var(--background); }
-    50% { color: #e05c5c; }
+    0%,
+    100% {
+        color: var(--background);
+    }
+    50% {
+        color: #e05c5c;
+    }
 }
 .board {
     width: 100%;

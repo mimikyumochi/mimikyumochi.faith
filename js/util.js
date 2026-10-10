@@ -6,7 +6,9 @@ export function closeTopWindow() {
     const el = document.getElementsByClassName(`${type}-window`)[0];
     if (!el) return;
 
-    const isReduced = window.matchMedia(`(prefers-reduced-motion: reduce)`) === true || window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
+    const isReduced =
+        window.matchMedia(`(prefers-reduced-motion: reduce)`) === true ||
+        window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
     if (!!isReduced) {
         el.remove();
     } else {
@@ -14,64 +16,59 @@ export function closeTopWindow() {
         el.addEventListener("transitionend", () => el.remove());
     }
 
-    windowOrder.shift()
+    windowOrder.shift();
     try {
-        document.querySelector(`#active-windows-${type}`).classList.toggle("hidden")
-    } catch (error) { console.log(`${type} does not have an active window icon`) }
-
+        document.querySelector(`#active-windows-${type}`).classList.toggle("hidden");
+    } catch (error) {
+        console.log(`${type} does not have an active window icon`);
+    }
 }
 
 export function updateClock() {
     const date = new Date();
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
 
     document.getElementById("clock").innerHTML = `${hours}:${minutes}:${seconds}`;
 }
 
 export function addActiveWindowWidgetListeners() {
-    const icons = document.querySelectorAll('#active-windows .app-icon');
+    const icons = document.querySelectorAll("#active-windows .app-icon");
 
-    icons.forEach(icon => {
-        icon.addEventListener('click', function() {
-            const type = icon.id.split('-').pop();
-            
+    icons.forEach((icon) => {
+        icon.addEventListener("click", function () {
+            const type = icon.id.split("-").pop();
+
             updateWindowOrder(type);
         });
     });
 }
 export function toggleTheme() {
-    
     var darkMode = localStorage.getItem("mainDarkMode");
     if (darkMode == "true") {
         document.documentElement.classList.remove("dark");
         document.documentElement.classList.add("light");
-    } 
-    else {
+    } else {
         document.documentElement.classList.add("dark");
         document.documentElement.classList.remove("light");
     }
 
-    localStorage.setItem("mainDarkMode", darkMode=="false" ? "true" : false);
+    localStorage.setItem("mainDarkMode", darkMode == "false" ? "true" : false);
 }
 
 export function loadTheme() {
-
     var darkMode = localStorage.getItem("mainDarkMode");
 
     if (darkMode == null) {
         localStorage.setItem("mainDarkMode", "false");
         document.documentElement.classList.add("light");
-    }
-    else if (darkMode == "false") {
+    } else if (darkMode == "false") {
         document.documentElement.classList.add("light");
-    }
-    else {
+    } else {
         document.documentElement.classList.add("dark");
     }
 }
-
 
 const locales = {};
 
@@ -84,7 +81,7 @@ export async function preloadLocales() {
 }
 
 export function getLocale() {
-    return locales[document.documentElement.lang.toLowerCase()]
+    return locales[document.documentElement.lang.toLowerCase()];
 }
 
 export function getFromLocale(langCode, key) {
@@ -104,7 +101,6 @@ export function getFromLocale(langCode, key) {
     return value;
 }
 
-
 export function loadLang(langCode) {
     const locale = locales[langCode.toLowerCase()];
     if (!locale) {
@@ -113,9 +109,9 @@ export function loadLang(langCode) {
     }
 
     document.documentElement.lang = langCode;
-    localStorage.setItem("lang", langCode)
+    localStorage.setItem("lang", langCode);
 
-    document.querySelectorAll("[data-i18n]").forEach(el => {
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
         const keyPath = el.dataset.i18n.split("."); // e.g., "about.title"
         let value = locale;
 
@@ -130,19 +126,19 @@ export function loadLang(langCode) {
 
         if (value !== null) {
             if (keyPath[0] == "about") {
-                value = `<i class="fa-regular fa-heart" style="color:lightskyblue"></i> ` + value
+                value = `<i class="fa-regular fa-heart" style="color:lightskyblue"></i> ` + value;
             }
             if (keyPath[0] == "likes") {
-                value = `<i class="fa-regular fa-heart" style="color:pink"></i> ` + value
+                value = `<i class="fa-regular fa-heart" style="color:pink"></i> ` + value;
             }
             if (el.dataset.app == "py") {
-                value = value + "." + locale.misc.py
+                value = value + "." + locale.misc.py;
             }
             if (el.dataset.app == "app") {
-                value = value + "." + locale.misc.app
+                value = value + "." + locale.misc.app;
             }
             if (el.dataset.app == "web") {
-                value = value + "." + locale.misc.web
+                value = value + "." + locale.misc.web;
             }
             el.innerHTML = value;
         } else {

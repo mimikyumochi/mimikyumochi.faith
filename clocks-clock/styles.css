@@ -9,10 +9,8 @@ body {
     overflow: hidden;
 }
 
-
-
 .digit-container {
-    position: relative; 
+    position: relative;
     display: flex;
 }
 
@@ -31,8 +29,6 @@ body {
     background: linear-gradient(-45deg, #333, #555);
     border-radius: 50%;
     position: relative;
-
-
 }
 
 .hand {
@@ -45,7 +41,6 @@ body {
     transform: translate(0, -50%);
     transform-origin: center;
     transition: all 0.4s ease-in-out;
-
 }
 
 .hand.hour {
@@ -56,26 +51,25 @@ body {
     rotate: 90deg;
 }
 
-
 a {
-  position: fixed;
-  bottom: 1rem;
-  right: 2rem;
-  color: #aa7bff;
-  background: #333;
-  padding: 0.5rem 1rem;
-  border-radius: 1vh;
-  text-decoration: none;
-  font-family: sans-serif;
-  font-size: 1.2rem;
+    position: fixed;
+    bottom: 1rem;
+    right: 2rem;
+    color: #aa7bff;
+    background: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 1vh;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 1.2rem;
 }
 
-@media only screen and (max-width: 1000px) {    
+@media only screen and (max-width: 1000px) {
     body {
         display: grid;
         justify-content: center;
         align-content: start;
-        gap: 5rem;               
+        gap: 5rem;
     }
     .clock-container {
         width: 20vh;

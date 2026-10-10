@@ -14,7 +14,7 @@ const pieceImages = {
     bb: "pieces/bb.svg",
     br: "pieces/br.svg",
     bq: "pieces/bq.svg",
-    bk: "pieces/bk.svg"
+    bk: "pieces/bk.svg",
 };
 
 let position = {};
@@ -97,7 +97,7 @@ function resetPosition() {
         e1: "wk",
         f1: "wb",
         g1: "wn",
-        h1: "wr"
+        h1: "wr",
     };
 }
 
@@ -129,7 +129,7 @@ function positionFromFen(fen) {
 }
 
 function renderBoard() {
-    document.querySelectorAll(".piece").forEach(piece => piece.remove());
+    document.querySelectorAll(".piece").forEach((piece) => piece.remove());
 
     for (const [squareName, pieceName] of Object.entries(position)) {
         const square = document.getElementById(squareName);
@@ -159,13 +159,13 @@ function getChangedSquares(oldPosition, newPosition) {
 }
 
 function clearHighlights() {
-    document.querySelectorAll(".square").forEach(square => {
+    document.querySelectorAll(".square").forEach((square) => {
         square.classList.remove("last-move", "in-check");
     });
 }
 
 function highlightLastMove(changedSquares) {
-    changedSquares.forEach(square => {
+    changedSquares.forEach((square) => {
         document.getElementById(square)?.classList.add("last-move");
     });
 }
@@ -175,7 +175,7 @@ function isSquareAttacked(square, byColour, boardPosition) {
     const rank = Number(square[1]);
     const prefix = byColour === "white" ? "w" : "b";
 
-    const pieceAt = (f, r) => (f >= 0 && f <= 7 && r >= 1 && r <= 8) ? boardPosition[`${files[f]}${r}`] : undefined;
+    const pieceAt = (f, r) => (f >= 0 && f <= 7 && r >= 1 && r <= 8 ? boardPosition[`${files[f]}${r}`] : undefined);
 
     const pawnRank = byColour === "white" ? rank - 1 : rank + 1;
 
@@ -183,7 +183,16 @@ function isSquareAttacked(square, byColour, boardPosition) {
         return true;
     }
 
-    const knightOffsets = [[1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]];
+    const knightOffsets = [
+        [1, 2],
+        [2, 1],
+        [2, -1],
+        [1, -2],
+        [-1, -2],
+        [-2, -1],
+        [-2, 1],
+        [-1, 2],
+    ];
 
     for (const [df, dr] of knightOffsets) {
         if (pieceAt(file + df, rank + dr) === prefix + "n") {
@@ -202,8 +211,24 @@ function isSquareAttacked(square, byColour, boardPosition) {
     }
 
     const slides = [
-        { dirs: [[1, 0], [-1, 0], [0, 1], [0, -1]], types: ["r", "q"] },
-        { dirs: [[1, 1], [1, -1], [-1, 1], [-1, -1]], types: ["b", "q"] }
+        {
+            dirs: [
+                [1, 0],
+                [-1, 0],
+                [0, 1],
+                [0, -1],
+            ],
+            types: ["r", "q"],
+        },
+        {
+            dirs: [
+                [1, 1],
+                [1, -1],
+                [-1, 1],
+                [-1, -1],
+            ],
+            types: ["b", "q"],
+        },
     ];
 
     for (const { dirs, types } of slides) {
@@ -259,7 +284,7 @@ const clockState = {
     whiteSeconds: null,
     blackSeconds: null,
     activeColour: null,
-    lastTick: null
+    lastTick: null,
 };
 
 function stopClockTimer() {
@@ -353,12 +378,14 @@ function updatePlayers(game, boardOrientation) {
     const bottomClockColour = boardOrientation === "white" ? "white-clock" : "black-clock";
 
     setPlayerTitle(document.querySelector("#top .player-title"), opponent.user?.title);
-    document.querySelector("#top .player-name").textContent = `${opponent.user?.name ?? "unknown"} (${opponent.rating ?? "????"})`;
+    document.querySelector("#top .player-name").textContent =
+        `${opponent.user?.name ?? "unknown"} (${opponent.rating ?? "????"})`;
     document.querySelector("#top .player-clock").classList.remove("white-clock", "black-clock");
     document.querySelector("#top .player-clock").classList.add(topClockColour);
 
     setPlayerTitle(document.querySelector("#bottom .player-title"), tomoko.user?.title);
-    document.querySelector("#bottom .player-name").textContent = `${tomoko.user?.name ?? "unknown"} (${tomoko.rating ?? "????"})`;
+    document.querySelector("#bottom .player-name").textContent =
+        `${tomoko.user?.name ?? "unknown"} (${tomoko.rating ?? "????"})`;
     document.querySelector("#bottom .player-clock").classList.remove("white-clock", "black-clock");
     document.querySelector("#bottom .player-clock").classList.add(bottomClockColour);
 }
@@ -374,11 +401,13 @@ function updateClocks(event, boardOrientation, activeColour) {
 }
 
 function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function findCurrentGame() {
-    const response = await fetch(`https://lichess.org/api/user/${username}/current-game`, { headers: { Accept: "application/json" } });
+    const response = await fetch(`https://lichess.org/api/user/${username}/current-game`, {
+        headers: { Accept: "application/json" },
+    });
 
     if (!response.ok) return null;
 
@@ -505,7 +534,7 @@ async function watchUserGames() {
             clearHighlights();
             renderBoard();
 
-            document.querySelectorAll(".player-score").forEach(el => setPlayerScore(el, null));
+            document.querySelectorAll(".player-score").forEach((el) => setPlayerScore(el, null));
 
             updatePlayers(game, orientation);
 

@@ -6,7 +6,7 @@
         "kotlin": "accro a kotlin",
         "hatepeople": "j'ai peur des gens",
         "eepy": "constamment somnolente",
-        "frontend": "fascinee par le cool front-end" 
+        "frontend": "fascinee par le cool front-end"
     },
     "likes": {
         "title": "ce que j'aime :3",
@@ -17,7 +17,7 @@
         "rlai": "reinforcement learning par IA"
     },
 
-    "specs":  {
+    "specs": {
         "title": "mon pc!!",
         "link": "specs"
     },
@@ -54,11 +54,10 @@
         "website": "mon-site-web",
         "clock": "horloge",
         "faithbot": "faithbot"
-
     },
     "misc": {
-        "app": "app", 
-        "web": "web", 
+        "app": "app",
+        "web": "web",
         "py": "py"
     }
 }

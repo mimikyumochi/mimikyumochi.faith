@@ -6,7 +6,7 @@
         "kotlin": "disfruto de kotlin",
         "hatepeople": "aterrorizada de la gente",
         "eepy": "constantemente con ganas de dormir",
-        "frontend": "fanatizada por front-end guay" 
+        "frontend": "fanatizada por front-end guay"
     },
     "likes": {
         "title": "cositas que me gustan :3",
@@ -20,7 +20,7 @@
         "title": "configuracion :3",
         "theme": "modo oscuro",
         "language": "idioma",
-        "languageName": "español" 
+        "languageName": "español"
     },
     "popup": {
         "title": "avertissement du système",
@@ -29,14 +29,14 @@
         "yes": "si",
         "no": "no"
     },
-    "specs":  {
+    "specs": {
         "title": "mi compu!!",
         "link": "specs"
     },
 
     "apps": {
-        "likes": "gustos", 
-        "socials": "sociales", 
+        "likes": "gustos",
+        "socials": "sociales",
         "speedruns": "speedruns",
         "specs": "specs-de-mi-pc",
 
@@ -51,10 +51,9 @@
         "website": "mi-sitio-web",
         "clock": "reloj",
         "faithbot": "faithbot"
-
     },
     "misc": {
-        "app": "app", 
+        "app": "app",
         "web": "web",
         "py": "py"
     }

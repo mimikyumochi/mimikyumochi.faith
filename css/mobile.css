@@ -7,7 +7,7 @@ body {
     font-size: 2.5vh;
     .widget {
         margin: 0.5rem;
-    };
+    }
 }
 
 #active-windows {
@@ -18,25 +18,19 @@ body {
     margin-top: 0.9rem;
 }
 
-
-
 .desktop {
     margin-top: 5vh;
-    margin-left: 6vh;  
+    margin-left: 6vh;
     gap: 5rem;
 
     justify-content: left;
 }
 
-
-
 .app-icon.folder {
     transform: translate(-25%, -15%);
 }
 
-
-
-.window { 
+.window {
     width: 100vw;
     height: 95vh;
     left: 0;
@@ -48,9 +42,9 @@ body {
     display: inline-block;
     width: 100vw;
     height: 6vh !important;
-    
+
     background-color: rgb(var(--bg2));
-    content: " "
+    content: " ";
 }
 
 .window .titlebar {
@@ -58,11 +52,10 @@ body {
     height: 2rem;
 }
 .window .content {
-    background-color: rgb(var(--bg2), 0.90);;
+    background-color: rgb(var(--bg2), 0.9);
 }
 
-
-.folder  {
+.folder {
     * {
         background-color: transparent;
     }
@@ -76,7 +69,6 @@ body {
 
         padding-top: 5ch;
         overflow: hidden;
-
     }
 
     .folder-items {
@@ -99,8 +91,6 @@ body {
                 font-size: 1.5rem;
             }
         }
-
-
     }
 
     .titlebar {
@@ -114,14 +104,12 @@ body {
             font-size: 2rem;
         }
     }
-
-
 }
 
 .folder::after {
     background-color: transparent;
 }
-.popup-window { 
+.popup-window {
     height: fit-content;
     width: 80%;
     left: 10%;
@@ -155,7 +143,7 @@ body {
         height: fit-content;
         gap: 1rem;
 
-        .browser-info { 
+        .browser-info {
             width: 100%;
             .browser-img {
                 display: inline;
@@ -175,8 +163,8 @@ body {
         input {
             width: 1rem;
             height: 1rem;
-            
-            transform: scale(200%) translateY(40%)
+
+            transform: scale(200%) translateY(40%);
         }
     }
 }
@@ -184,17 +172,15 @@ body {
 .popup-buttons {
     position: relative;
     top: -15%;
-
 }
 
 .popup-window::after {
     display: none;
 }
 
-
 .content {
     height: 84vh;
-    backdrop-filter: blur(3px); 
+    backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px); /* for safari */
 
     p {

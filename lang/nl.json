@@ -22,23 +22,22 @@
         "file": "dit bestand wordt extern gehost. openen in browser?",
         "yes": "ja",
         "no": "nee"
-        
     },
     "settings": {
         "title": "instellingen :3",
         "theme": "donkere modus",
-        "language": "taal", 
+        "language": "taal",
         "languageName": "nederlands"
     },
-    "specs":  {
+    "specs": {
         "title": "mijn pc!!",
         "link": "specificaties"
     },
     "apps": {
-        "likes": "vind-ik-leuks", 
-        "socials": "socials", 
+        "likes": "vind-ik-leuks",
+        "socials": "socials",
         "speedruns": "speedruns",
-        "specs": "pc-specificaties", 
+        "specs": "pc-specificaties",
 
         "projects": "projecten",
         "about": "over-mij",
@@ -53,7 +52,7 @@
         "faithbot": "faithbot"
     },
     "misc": {
-        "app": "app", 
+        "app": "app",
         "web": "web",
         "py": "py"
     }

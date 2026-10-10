@@ -1,105 +1,112 @@
 import {
-    AboutWindow, LikesWindow, ProjectsWindow, SpecsWindow, SocialsWindow, SettingsWindow, SpeedrunsWindow, ModsWindow,
-    FriendsWindow
-} from './windows.js';
-import { updateClock, loadTheme, loadLang, preloadLocales, closeTopWindow, addActiveWindowWidgetListeners } from './util.js';
+    AboutWindow,
+    LikesWindow,
+    ProjectsWindow,
+    SpecsWindow,
+    SocialsWindow,
+    SettingsWindow,
+    SpeedrunsWindow,
+    ModsWindow,
+    FriendsWindow,
+} from "./windows.js";
+import {
+    updateClock,
+    loadTheme,
+    loadLang,
+    preloadLocales,
+    closeTopWindow,
+    addActiveWindowWidgetListeners,
+} from "./util.js";
 
 document.getElementById("about").addEventListener("click", () => {
-
-    let currentLang = document.documentElement.lang.toLowerCase()
+    let currentLang = document.documentElement.lang.toLowerCase();
     fetch(`lang/${currentLang}.json`)
-    .then(res => res.json())
-    .then(locale => {
-        new AboutWindow(locale);
-    });
-}) 
+        .then((res) => res.json())
+        .then((locale) => {
+            new AboutWindow(locale);
+        });
+});
 document.getElementById("likes").addEventListener("click", () => {
-    let currentLang = document.documentElement.lang.toLowerCase()
+    let currentLang = document.documentElement.lang.toLowerCase();
     fetch(`lang/${currentLang}.json`)
-    .then(res => res.json())
-    .then(locale => {
-        new LikesWindow(locale);
-    });
-}) 
+        .then((res) => res.json())
+        .then((locale) => {
+            new LikesWindow(locale);
+        });
+});
 document.getElementById("projects").addEventListener("click", () => {
-    let currentLang = document.documentElement.lang.toLowerCase()
+    let currentLang = document.documentElement.lang.toLowerCase();
     fetch(`lang/${currentLang}.json`)
-    .then(res => res.json())
-    .then(locale => {
-        new ProjectsWindow(locale);
-    });
-}) 
+        .then((res) => res.json())
+        .then((locale) => {
+            new ProjectsWindow(locale);
+        });
+});
 document.getElementById("specs").addEventListener("click", () => {
-    let currentLang = document.documentElement.lang.toLowerCase()
+    let currentLang = document.documentElement.lang.toLowerCase();
     fetch(`lang/${currentLang}.json`)
-    .then(res => res.json())
-    .then(locale => {
-        new SpecsWindow(locale);
-    });
-}) 
+        .then((res) => res.json())
+        .then((locale) => {
+            new SpecsWindow(locale);
+        });
+});
 document.getElementById("socials").addEventListener("click", () => {
-    let currentLang = document.documentElement.lang.toLowerCase()
+    let currentLang = document.documentElement.lang.toLowerCase();
     fetch(`lang/${currentLang}.json`)
-    .then(res => res.json())
-    .then(locale => {
-        new SocialsWindow(locale);
-    });
-})
+        .then((res) => res.json())
+        .then((locale) => {
+            new SocialsWindow(locale);
+        });
+});
 document.getElementById("mods").addEventListener("click", () => {
-    let currentLang = document.documentElement.lang.toLowerCase()
+    let currentLang = document.documentElement.lang.toLowerCase();
     fetch(`lang/${currentLang}.json`)
-        .then(res => res.json())
-        .then(locale => {
+        .then((res) => res.json())
+        .then((locale) => {
             new ModsWindow(locale);
         });
-})
+});
 document.getElementById("friends").addEventListener("click", () => {
-    let currentLang = document.documentElement.lang.toLowerCase()
+    let currentLang = document.documentElement.lang.toLowerCase();
     fetch(`lang/${currentLang}.json`)
-        .then(res => res.json())
-        .then(locale => {
+        .then((res) => res.json())
+        .then((locale) => {
             new FriendsWindow(locale);
         });
-})
+});
 document.getElementById("speedruns").addEventListener("click", () => {
-    let currentLang = document.documentElement.lang.toLowerCase()
+    let currentLang = document.documentElement.lang.toLowerCase();
     fetch(`lang/${currentLang}.json`)
-    .then(res => res.json())
-    .then(locale => {
-        new SpeedrunsWindow(locale);
-    });
-}) 
+        .then((res) => res.json())
+        .then((locale) => {
+            new SpeedrunsWindow(locale);
+        });
+});
 document.getElementById("settings").addEventListener("click", () => {
-    let currentLang = document.documentElement.lang.toLowerCase()
+    let currentLang = document.documentElement.lang.toLowerCase();
     fetch(`lang/${currentLang}.json`)
-    .then(res => res.json())
-    .then(locale => {
-        new SettingsWindow(locale);
-    });
-}) 
+        .then((res) => res.json())
+        .then((locale) => {
+            new SettingsWindow(locale);
+        });
+});
 
-document.addEventListener("keydown", function(event) {
+document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
         closeTopWindow();
     }
 });
 
-
-
-
-
 addActiveWindowWidgetListeners();
 
-preloadLocales()
-loadTheme()
-updateClock()
+preloadLocales();
+loadTheme();
+updateClock();
 
 setTimeout(() => {
-    loadLang(localStorage.getItem("lang") ? localStorage.getItem("lang") : "en")
-}, 500)
+    loadLang(localStorage.getItem("lang") ? localStorage.getItem("lang") : "en");
+}, 500);
 
 setInterval(() => {
-    updateClock()
+    updateClock();
 }, 1000);
-
-

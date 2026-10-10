@@ -1,35 +1,45 @@
-import { Window } from './windowBase.js';
-import { PopupWindow } from './popupWindow.js';
-import { getFromLocale, toggleTheme, loadLang } from './util.js';
-
+import { Window } from "./windowBase.js";
+import { PopupWindow } from "./popupWindow.js";
+import { getFromLocale, toggleTheme, loadLang } from "./util.js";
 
 export class AboutWindow extends Window {
     constructor(locale) {
-        super("about", `${locale.about.title}`, `
+        super(
+            "about",
+            `${locale.about.title}`,
+            `
                 <p data-i18n="about.age"><i class="fa-regular fa-heart" style="color:lightskyblue"></i> ${locale.about.age}</p>
                 <p data-i18n="about.relationship"><i class="fa-regular fa-heart" style="color:lightskyblue"></i> ${locale.about.relationship}</p>
                 <p data-i18n="about.kotlin"><i class="fa-regular fa-heart" style="color:lightskyblue"></i> ${locale.about.kotlin}</p>
                 <p data-i18n="about.hatepeople"><i class="fa-regular fa-heart" style="color:lightskyblue"></i> ${locale.about.hatepeople}</p>
                 <p data-i18n="about.eepy"><i class="fa-regular fa-heart" style="color:lightskyblue"></i> ${locale.about.eepy}</p>
                 <p data-i18n="about.frontend"><i class="fa-regular fa-heart" style="color:lightskyblue"></i> ${locale.about.frontend}</p>
-            `)
+            `,
+        );
     }
 }
 export class LikesWindow extends Window {
     constructor(locale) {
-        super("likes", `${locale.likes.title}`, `
+        super(
+            "likes",
+            `${locale.likes.title}`,
+            `
                 <p data-i18n="likes.animals"><i class="fa-regular fa-heart" style="color:pink"></i> ${locale.likes.animals}</p>
                 <p data-i18n="likes.seedfind"><i class="fa-regular fa-heart" style="color:pink"></i> ${locale.likes.seedfind}</p>
                 <p data-i18n="likes.speedrun"><i class="fa-regular fa-heart" style="color:pink"></i> ${locale.likes.speedrun}</p>
                 <p data-i18n="likes.maze"><i class="fa-regular fa-heart" style="color:pink"></i> ${locale.likes.maze}</a></p>
                 <p data-i18n="likes.rlai"><i class="fa-regular fa-heart" style="color:pink"></i> ${locale.likes.rlai}</p>
-                `)
+                `,
+        );
     }
 }
 
 export class SpecsWindow extends Window {
     constructor(locale) {
-        super("specs", `${locale.specs.title}`, `
+        super(
+            "specs",
+            `${locale.specs.title}`,
+            `
                 <p><i class="fa-solid fa-microchip"></i> AMD Ryzen 7 5700X</p>
                 <p><i class="fa-solid fa-memory"></i> 32 GB (4 x 8 GB) DDR4 3200</p>
                 <p><i class="fa-solid fa-hard-drive"></i> Samsung 980 Pro 1TB SSD
@@ -38,13 +48,17 @@ export class SpecsWindow extends Window {
                 <p><i class="fa-solid fa-hard-drive"></i> Seagate Exos 8TB HDD</p>
                 <p><i class="fa-solid fa-display"></i>MSI RTX 3060</p>
                 <p><a href="https://uk.pcpartpicker.com/list/gV3s9C" target="_blank" style="font-weight:bold"><i class="fa-solid fa-link"></i> ${locale.specs.link}</a></p>
-            `)
+            `,
+        );
     }
 }
 
 export class ProjectsWindow extends Window {
     constructor(locale) {
-        super("folder projects", `${locale.apps.projects}`, `
+        super(
+            "folder projects",
+            `${locale.apps.projects}`,
+            `
             <div class="folder-items">
                 <div class="app-icon" id="connect4">
                     <i class="fa-solid fa-circle" id="red" style="color: rgb(255, 93, 93);"></i>
@@ -84,8 +98,9 @@ export class ProjectsWindow extends Window {
             </div>
 
 
-            `)
-        
+            `,
+        );
+
         const el = this.el;
         el.querySelector("#connect4").addEventListener("click", (e) => {
             e.stopPropagation();
@@ -104,7 +119,7 @@ export class ProjectsWindow extends Window {
 
         el.querySelector("#mazegen").addEventListener("click", (e) => {
             e.stopPropagation();
-            new PopupWindow(locale, "file", "https://github.com/mimikyumochi/hunt-and-kill",  "folder projects");
+            new PopupWindow(locale, "file", "https://github.com/mimikyumochi/hunt-and-kill", "folder projects");
         });
 
         el.querySelector("#clock").addEventListener("click", (e) => {
@@ -119,9 +134,12 @@ export class ProjectsWindow extends Window {
 }
 export class SocialsWindow extends Window {
     constructor(locale) {
-        let isDark = localStorage.getItem("mainDarkMode") == "true" ? "" : "-dark"
+        let isDark = localStorage.getItem("mainDarkMode") == "true" ? "" : "-dark";
 
-        super("folder socials", `${locale.apps.socials}`, `
+        super(
+            "folder socials",
+            `${locale.apps.socials}`,
+            `
             <div class="folder-items">
                 <div class="app-icon" id="github">
                     <img class="icon-img" src="assets/icons/github${isDark}.svg"></img>
@@ -153,20 +171,42 @@ export class SocialsWindow extends Window {
                     <span class="app-label">modrinth.web</span>
                 </div>
             </div>
-            `)
+            `,
+        );
 
-            const el = this.el;
-            el.querySelector("#github").addEventListener("click", () => new PopupWindow(locale, "link", "https://github.com/mimikyumochi", "socials"));
-            el.querySelector("#youtube").addEventListener("click", () => new PopupWindow(locale, "link", "https://youtube.com/@mimikyumochii", "socials"));
-            el.querySelector("#instagram").addEventListener("click", () => new PopupWindow(locale, "link", "https://instagram.com/mimikyumochi", "socials"));
-            el.querySelector("#pronouns-page").addEventListener("click", () => new PopupWindow(locale, "link", "https://pronouns.page/@mimikyumochi", "socials"));
-            el.querySelector("#twitter").addEventListener("click", () => new PopupWindow(locale, "link", "https://twitter.com/mimikyumochii", "socials"));
-            el.querySelector("#modrinth").addEventListener("click", () => new PopupWindow(locale, "link", "https://modrinth.com/user/mimikyumochi", "socials"));
+        const el = this.el;
+        el.querySelector("#github").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://github.com/mimikyumochi", "socials"),
+        );
+        el.querySelector("#youtube").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://youtube.com/@mimikyumochii", "socials"),
+        );
+        el.querySelector("#instagram").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://instagram.com/mimikyumochi", "socials"),
+        );
+        el.querySelector("#pronouns-page").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://pronouns.page/@mimikyumochi", "socials"),
+        );
+        el.querySelector("#twitter").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://twitter.com/mimikyumochii", "socials"),
+        );
+        el.querySelector("#modrinth").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://modrinth.com/user/mimikyumochi", "socials"),
+        );
     }
 }
 export class ModsWindow extends Window {
     constructor(locale) {
-        super("folder mods", `${locale.apps.mods}`, `
+        super(
+            "folder mods",
+            `${locale.apps.mods}`,
+            `
             <div class="folder-items">
                 <div class="app-icon" id="chiyoko">
                     <img class="icon-img" src="assets/icons/modrinth.svg"></img>
@@ -178,17 +218,27 @@ export class ModsWindow extends Window {
                     <span class="app-label">open-to-lan-fix.jar</span>
                 </div>
             </div>
-            `)
+            `,
+        );
 
         const el = this.el;
-        el.querySelector("#chiyoko").addEventListener("click", () => new PopupWindow(locale, "link", "https://modrinth.com/mod/chiyoko", "mods"));
-        el.querySelector("#opentolanfix").addEventListener("click", () => new PopupWindow(locale, "link", "https://modrinth.com/mod/open-to-lan-fix", "mods"));
+        el.querySelector("#chiyoko").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://modrinth.com/mod/chiyoko", "mods"),
+        );
+        el.querySelector("#opentolanfix").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://modrinth.com/mod/open-to-lan-fix", "mods"),
+        );
     }
 }
 
 export class FriendsWindow extends Window {
     constructor(locale) {
-        super("folder friends", `${locale.apps.friends}`, `
+        super(
+            "folder friends",
+            `${locale.apps.friends}`,
+            `
             <div class="folder-items">
                 <div class="app-icon" id="Abril">
                     <img class="icon-img" src="assets/people/abril.webp"></img>
@@ -228,51 +278,84 @@ export class FriendsWindow extends Window {
                 </div>
 
             </div>
-        `)
+        `,
+        );
         const el = this.el;
-        el.querySelector("#Abril").addEventListener("click", () => new PopupWindow(locale, "link", "https://tilde.town/~abril/", "friends"));
-        el.querySelector("#CrystalSRL").addEventListener("click", () => new PopupWindow(locale, "link", "https://crystalsrl.carrd.co/", "friends"));
-        el.querySelector("#eira").addEventListener("click", () => new PopupWindow(locale, "link", "https://en.pronouns.page/@eirasv", "friends"));
-        el.querySelector("#fanda857").addEventListener("click", () => new PopupWindow(locale, "link", "https://seedcrack.com/", "friends"));
-        el.querySelector("#lunar").addEventListener("click", () => new PopupWindow(locale, "link", "https://en.pronouns.page/@sleepyylunar", "friends"));
-        el.querySelector("#M8use").addEventListener("click", () => new PopupWindow(locale, "link", "https://m8use.com", "friends"));
-        el.querySelector("#Meox_").addEventListener("click", () => new PopupWindow(locale, "link", "https://meox.moe/user/meox/about/meox_.html", "friends"));
+        el.querySelector("#Abril").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://tilde.town/~abril/", "friends"),
+        );
+        el.querySelector("#CrystalSRL").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://crystalsrl.carrd.co/", "friends"),
+        );
+        el.querySelector("#eira").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://en.pronouns.page/@eirasv", "friends"),
+        );
+        el.querySelector("#fanda857").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://seedcrack.com/", "friends"),
+        );
+        el.querySelector("#lunar").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://en.pronouns.page/@sleepyylunar", "friends"),
+        );
+        el.querySelector("#M8use").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://m8use.com", "friends"),
+        );
+        el.querySelector("#Meox_").addEventListener(
+            "click",
+            () => new PopupWindow(locale, "link", "https://meox.moe/user/meox/about/meox_.html", "friends"),
+        );
 
         el.querySelector("#cylscooler").addEventListener("click", (e) => {
             e.stopPropagation();
-            new CylscoolerWindow(locale)
+            new CylscoolerWindow(locale);
         });
         el.querySelector("#showme7").addEventListener("click", (e) => {
             e.stopPropagation();
-            new ShowMe7Window(locale)
+            new ShowMe7Window(locale);
         });
     }
 }
 
 export class CylscoolerWindow extends Window {
     constructor(locale) {
-        super("cylscooler", `cylscooler`, `
+        super(
+            "cylscooler",
+            `cylscooler`,
+            `
                 
                 <iframe src="abouts/cylscooler.html" style="width: 100%; height: 100%; zoom: 0.7; border: none;" id="cylscooler-iframe"></iframe>
 
-            `)
+            `,
+        );
     }
 }
 export class ShowMe7Window extends Window {
     constructor(locale) {
-        super("showme7", `showme7`, `
+        super(
+            "showme7",
+            `showme7`,
+            `
                 
                 <iframe src="abouts/showme7.html" style="width: 100%; height: 100%; zoom: 0.7; border: none;" id="showme7-iframe"></iframe>
 
-            `)
+            `,
+        );
     }
 }
 
 export class SpeedrunsWindow extends Window {
     constructor(locale) {
-        let isDark = localStorage.getItem("mainDarkMode") == "true" ? "" : "-dark"
+        let isDark = localStorage.getItem("mainDarkMode") == "true" ? "" : "-dark";
 
-        super("speedruns", `${locale.apps.speedruns} pbs`, `
+        super(
+            "speedruns",
+            `${locale.apps.speedruns} pbs`,
+            `
                 <div class="game-container">
                     <h1 class="game-title">Superliminal</h1>
                     <div class="pb-container">
@@ -294,55 +377,74 @@ export class SpeedrunsWindow extends Window {
                         <p class="pb"><span class="category">1.18+ SSG -</span><span class="time">3:12</span></p>
                     </div>
                 </div>
-            `)
+            `,
+        );
     }
 }
 
 export class Connect4Window extends Window {
     constructor(locale) {
-        super("connect4", `${locale.apps.connect4} :o`, `
+        super(
+            "connect4",
+            `${locale.apps.connect4} :o`,
+            `
             
             <iframe src="connect4" style="width: 100%; height: 100%; zoom: 0.7; border: none;" id="connect4-iframe"></iframe>
 
-            `)
+            `,
+        );
     }
 }
 
 export class MazeGameWindow extends Window {
     constructor(locale) {
-        super("maze", `${locale.apps.maze} c:`, `
+        super(
+            "maze",
+            `${locale.apps.maze} c:`,
+            `
             
             <iframe src="maze" style="width: 100%; height: 100%; zoom: 0.7; border: none;" id="maze-iframe"></iframe>
 
-            `)
+            `,
+        );
     }
-    
 }
 
 export class ClockWindow extends Window {
     constructor(locale) {
-        super("clock", `${locale.apps.clock}?!`, `
+        super(
+            "clock",
+            `${locale.apps.clock}?!`,
+            `
             
             <iframe src="clocks-clock" style="width: 100%; height: 100%; zoom: 0.7; border: none;" id="clock-iframe"></iframe>
 
-            `)
+            `,
+        );
     }
 }
 
 export class TomokoWindow extends Window {
     constructor(locale) {
-        let windowZoom = 0.8
-        super("tomoko", `tomoko :3`, `
+        let windowZoom = 0.8;
+        super(
+            "tomoko",
+            `tomoko :3`,
+            `
             <div style="width: 100%; height: 100%; overflow: hidden;">
                 <iframe src="tomoko" style="width: calc(100% / ${windowZoom}); height: calc(100% / ${windowZoom}); transform: scale(${windowZoom}); transform-origin: 0 0; border: none;" id="tomoko-iframe"></iframe>
             </div>
-            `)
+            `,
+        );
     }
 }
 export class SettingsWindow extends Window {
     constructor(locale) {
-        let checked = localStorage.getItem("mainDarkMode") == "true" ? "checked" : ""
-        super("settings", `${locale.settings.title}`, `
+        let checked = localStorage.getItem("mainDarkMode") == "true" ? "checked" : "";
+        super(
+            "settings",
+            `${locale.settings.title}`,
+            `
             
             <div class="switch-container">
                 <span class="switch-label" data-i18n="settings.theme">${locale.settings.theme}</span>
@@ -364,9 +466,11 @@ export class SettingsWindow extends Window {
                 </form>
             </div>
 
-            `)
-        document.getElementById("theme-switch").addEventListener("change", toggleTheme)
-        document.getElementById("language-picker-select").addEventListener("change", (e) => { loadLang(e.target.value) })
-
+            `,
+        );
+        document.getElementById("theme-switch").addEventListener("change", toggleTheme);
+        document.getElementById("language-picker-select").addEventListener("change", (e) => {
+            loadLang(e.target.value);
+        });
     }
 }

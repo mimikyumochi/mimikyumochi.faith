@@ -1,40 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <title>tomoko viewer :3</title>
+        <link rel="stylesheet" href="viewer.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
 
-<head>
-    <title>tomoko viewer :3</title>
-    <link rel="stylesheet" href="viewer.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-
-<body>
-    <div class="buttons">
-        <a href="https://lichess.org/@/TomokoNN" target="_blank" class="light button">play vs</a>
-        <a href="about.html" class="dark button">about</a>
-    </div>
-    <div class="game-container">
-        <div class="player-container" id="top">
-            <div class="player-info">
-                <p class="player-title"></p>
-                <p class="player-name"></p>
-                <p class="player-score"></p>
+    <body>
+        <div class="buttons">
+            <a href="https://lichess.org/@/TomokoNN" target="_blank" class="light button">play vs</a>
+            <a href="about.html" class="dark button">about</a>
+        </div>
+        <div class="game-container">
+            <div class="player-container" id="top">
+                <div class="player-info">
+                    <p class="player-title"></p>
+                    <p class="player-name"></p>
+                    <p class="player-score"></p>
+                </div>
+                <p class="player-clock"></p>
             </div>
-            <p class="player-clock"></p>
-        </div>
-        <div class="board">
-
-        </div>
-        <div class="player-container" id="bottom">
-            <div class="player-info">
-                <p class="player-title"></p>
-                <p class="player-name"></p>
-                <p class="player-score"></p>
+            <div class="board"></div>
+            <div class="player-container" id="bottom">
+                <div class="player-info">
+                    <p class="player-title"></p>
+                    <p class="player-name"></p>
+                    <p class="player-score"></p>
+                </div>
+                <p class="player-clock"></p>
             </div>
-            <p class="player-clock"></p>
         </div>
-    </div>
-</body>
+    </body>
 
-<script type="module" src="viewer.js"></script>
+    <script type="module" src="viewer.js"></script>
 </html>

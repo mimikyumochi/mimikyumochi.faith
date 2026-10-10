@@ -1,45 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="maze yayyayayyayayayyay">
-    <title>maze!!</title>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="maze yayyayayyayayayyay" />
+        <title>maze!!</title>
 
-    <!-- apply the saved theme before first paint so theres no light to dark flash -->
-    <script>
-        if (localStorage.getItem("darkMode") === "true") document.documentElement.classList.add("dark-theme");
-    </script>
+        <!-- apply the saved theme before first paint so theres no light to dark flash -->
+        <script>
+            if (localStorage.getItem("darkMode") === "true") document.documentElement.classList.add("dark-theme");
+        </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap">
-    <link rel="stylesheet" href="maze.css">
-    <script type="module" src="maze.js"></script>
-</head>
-<body>
-    <button class="theme-toggle" aria-label="toggle dark mode">☾</button>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" />
+        <link rel="stylesheet" href="maze.css" />
+        <script type="module" src="maze.js"></script>
+    </head>
+    <body>
+        <button class="theme-toggle" aria-label="toggle dark mode">☾</button>
 
-    <main class="game">
-        <div class="timer-container">
-            <button class="timer-button new-maze">New</button>
-            <div class="timer">0.000s</div>
-            <button class="timer-button reset">Reset</button>
-        </div>
+        <main class="game">
+            <div class="timer-container">
+                <button class="timer-button new-maze">New</button>
+                <div class="timer">0.000s</div>
+                <button class="timer-button reset">Reset</button>
+            </div>
 
-        <div class="maze"></div>
+            <div class="maze"></div>
 
-        <div class="mobile-controls">
-            <button class="up" data-dir="up" aria-label="up">▲</button>
-            <button class="left" data-dir="left" aria-label="left">◀</button>
-            <button class="down" data-dir="down" aria-label="down">▼</button>
-            <button class="right" data-dir="right" aria-label="right">▶</button>
-        </div>
+            <div class="mobile-controls">
+                <button class="up" data-dir="up" aria-label="up">▲</button>
+                <button class="left" data-dir="left" aria-label="left">◀</button>
+                <button class="down" data-dir="down" aria-label="down">▼</button>
+                <button class="right" data-dir="right" aria-label="right">▶</button>
+            </div>
 
-        <div class="share-code-container">
-            <textarea class="share-code-input" rows="1" spellcheck="false" aria-label="share code"></textarea>
-            <button class="copy-share-code">Copy</button>
-        </div>
-    </main>
-</body>
+            <div class="share-code-container">
+                <textarea class="share-code-input" rows="1" spellcheck="false" aria-label="share code"></textarea>
+                <button class="copy-share-code">Copy</button>
+            </div>
+        </main>
+    </body>
 </html>

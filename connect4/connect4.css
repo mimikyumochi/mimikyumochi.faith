@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
 
 * {
-    font-family: 'Quicksand', sans-serif;
+    font-family: "Quicksand", sans-serif;
 }
 
 :root {
@@ -13,7 +13,7 @@
     --orange: rgb(255, 197, 109);
     --yellow: rgb(255, 255, 158);
     --green: rgb(131, 255, 137);
-    --blue: rgb(157, 253, 253); 
+    --blue: rgb(157, 253, 253);
     --purple: rgb(199, 131, 255);
 }
 
@@ -86,7 +86,6 @@ body {
     color: var(--player-two);
 }
 
-
 .dropdown-button {
     display: grid;
     padding: 16px;
@@ -95,7 +94,6 @@ body {
     font-size: 2rem;
     aspect-ratio: 1;
 }
-
 
 .dropdown {
     position: absolute;
@@ -120,7 +118,7 @@ body {
 }
 
 .clear-board {
-    background-color: #535353;  
+    background-color: #535353;
     color: white;
     padding: 2ch;
     font-size: 1vw;
@@ -132,8 +130,7 @@ body {
     right: 2.5%;
 }
 
-
-@media only screen and (max-width:  767px) {
+@media only screen and (max-width: 767px) {
     .board {
         left: 0;
         top: 50%;

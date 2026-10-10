@@ -1,4 +1,3 @@
-
 const SIZE = 10;
 const START = 0;
 const GOAL = SIZE * SIZE - 1;
